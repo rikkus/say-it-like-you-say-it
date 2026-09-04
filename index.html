@@ -1,0 +1,1733 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A spoken version of the mydialect.us dialect quiz. Read lines aloud; your vowels, sibilants and syllables are measured on-device, turned into IPA, and submitted to the real quiz.">
+<meta name="theme-color" content="#e7eaed" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e131a" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="no">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%F0%9F%8E%99%3C/text%3E%3C/svg%3E">
+<title>Say It Like You Say It</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&family=Noto+Sans+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  --bg:#e7eaed; --surface:#f7f8f9; --surface-2:#dfe4e8; --ink:#131820; --ink-2:#525e6b;
+  --ink-3:#7d8a97; --line:#c9d2d9; --line-2:#aeb9c3;
+  --live:#ab2049; --live-soft:#f4dce3; --ok:#0d6a60; --ok-soft:#d5eae7;
+  --warn:#96590a; --warn-soft:#f4e6cd;
+  --trace:#5b6b7d;
+  --shadow:0 1px 0 rgba(19,24,32,.06), 0 12px 28px -18px rgba(19,24,32,.5);
+  --f-disp:"Bricolage Grotesque",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --f-read:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"Noto Sans Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0e131a; --surface:#171f28; --surface-2:#202a35; --ink:#e7edf2; --ink-2:#9aa8b5;
+    --ink-3:#6d7b89; --line:#2a3541; --line-2:#3a4756;
+    --live:#ff5f86; --live-soft:#3a1826; --ok:#43d3bf; --ok-soft:#123430;
+    --warn:#e2a54c; --warn-soft:#33260f;
+    --trace:#8ea1b5;
+    --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 34px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0e131a; --surface:#171f28; --surface-2:#202a35; --ink:#e7edf2; --ink-2:#9aa8b5;
+  --ink-3:#6d7b89; --line:#2a3541; --line-2:#3a4756;
+  --live:#ff5f86; --live-soft:#3a1826; --ok:#43d3bf; --ok-soft:#123430;
+  --warn:#e2a54c; --warn-soft:#33260f;
+  --trace:#8ea1b5;
+  --shadow:0 1px 0 rgba(0,0,0,.4), 0 16px 34px -20px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-disp);
+  -webkit-font-smoothing:antialiased;line-height:1.5}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--live);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.shell{max-width:920px;margin:0 auto;padding:22px 18px 90px;display:flex;flex-direction:column;gap:20px}
+
+/* ---------- masthead ---------- */
+.mast{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  border-bottom:1px solid var(--line);padding-bottom:14px}
+.mast h1{font-size:clamp(26px,4.6vw,40px);font-weight:800;letter-spacing:-.025em;margin:0;text-wrap:balance}
+.mast .sub{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink-3);margin:0 0 4px}
+.mast .right{display:flex;gap:8px;align-items:center}
+
+/* ---------- tape / progress ---------- */
+.tape{display:flex;gap:3px;flex-wrap:wrap;align-items:center}
+.tape .cell{width:11px;height:11px;border:1px solid var(--line-2);background:transparent;border-radius:2px}
+.tape .cell.done{background:var(--ok);border-color:var(--ok)}
+.tape .cell.now{background:var(--live);border-color:var(--live)}
+.tape-note{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);letter-spacing:.06em}
+
+/* ---------- panels ---------- */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:4px;box-shadow:var(--shadow)}
+.panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding:12px 18px;border-bottom:1px solid var(--line)}
+.panel-head h2{margin:0;font-size:14px;font-weight:700;letter-spacing:-.01em}
+.eyebrow{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- passage ---------- */
+.passage{padding:20px 18px 8px;display:flex;flex-direction:column;gap:2px}
+.line{font-family:var(--f-read);font-size:17px;font-weight:300;color:var(--ink-3);
+  padding:9px 12px;border-left:2px solid transparent;transition:color .25s,background .25s}
+.line.done{color:var(--ink-2)}
+.line.active{color:var(--ink);font-size:clamp(21px,3.4vw,29px);line-height:1.34;font-weight:400;
+  border-left-color:var(--live);background:linear-gradient(90deg,var(--live-soft),transparent 70%)}
+.line .slot{font-family:var(--f-mono);font-size:.72em;letter-spacing:.02em;color:var(--live);
+  border-bottom:2px dotted var(--live);padding:0 .35em;white-space:nowrap}
+.line .tgt{text-decoration:underline;text-decoration-style:dotted;text-decoration-thickness:1.5px;
+  text-underline-offset:5px;text-decoration-color:var(--live)}
+.line .hint{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;
+  color:var(--ink-3);margin-top:8px;text-transform:none}
+
+/* ---------- scope ---------- */
+.scope-wrap{position:relative;margin:6px 18px 0;border:1px solid var(--line);border-radius:3px;
+  background:var(--surface-2);overflow:hidden}
+canvas#scope{display:block;width:100%;height:104px}
+.scope-tag{position:absolute;left:8px;top:6px;font-family:var(--f-mono);font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);pointer-events:none}
+.scope-lvl{position:absolute;right:8px;top:6px;font-family:var(--f-mono);font-size:10px;
+  color:var(--ink-3);font-variant-numeric:tabular-nums;pointer-events:none}
+
+/* ---------- controls ---------- */
+.controls{display:flex;align-items:center;gap:12px;padding:14px 18px 18px;flex-wrap:wrap}
+.mic{display:inline-flex;align-items:center;gap:10px;background:var(--live);color:#fff;border:none;
+  border-radius:999px;padding:12px 22px;font-weight:700;font-size:15px;letter-spacing:-.01em}
+.mic[disabled]{opacity:.45;cursor:default}
+.mic .dot{width:9px;height:9px;border-radius:50%;background:#fff}
+.mic.rec .dot{animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.btn{background:transparent;border:1px solid var(--line-2);border-radius:999px;padding:9px 15px;
+  font-size:13px;font-weight:500;color:var(--ink-2)}
+.btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.btn.solid{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:700}
+.spacer{flex:1}
+.status{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-3);letter-spacing:.03em}
+
+/* ---------- verdict ---------- */
+.verdicts{display:flex;flex-direction:column;gap:0}
+.verdict{border-top:1px solid var(--line);padding:14px 18px;display:grid;
+  grid-template-columns:minmax(0,1fr) auto;gap:10px 18px;align-items:start}
+.verdict .q{font-size:12.5px;color:var(--ink-2);margin:0 0 6px}
+.verdict .ipa{font-family:var(--f-mono);font-size:22px;font-weight:600;color:var(--ink);letter-spacing:.02em}
+.verdict .measure{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);
+  font-variant-numeric:tabular-nums;margin-top:5px;line-height:1.7}
+.verdict .picked{display:inline-flex;align-items:center;gap:7px;margin-top:9px;font-size:14px;font-weight:600}
+.verdict .picked b{font-weight:700}
+.conf{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px}
+.conf.hi{background:var(--ok-soft);color:var(--ok)}
+.conf.lo{background:var(--warn-soft);color:var(--warn)}
+.opts{display:flex;flex-wrap:wrap;gap:5px;margin-top:11px}
+.opt{border:1px solid var(--line-2);background:transparent;border-radius:999px;padding:5px 11px;
+  font-size:12px;color:var(--ink-2);max-width:100%;text-align:left}
+.opt.sel{background:var(--ok);border-color:var(--ok);color:#fff;font-weight:600}
+.opt:hover{border-color:var(--ink-3)}
+.heard{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);margin-top:7px}
+.heard em{color:var(--ink);font-style:normal}
+
+/* ---------- answer sheet ---------- */
+.sheet{padding:6px 18px 16px;max-height:320px;overflow-y:auto}
+.sheet ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.sheet li{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:baseline;
+  padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+.sheet li:last-child{border-bottom:none}
+.sheet .n{font-family:var(--f-mono);font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.sheet .qt{color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sheet .av{font-weight:600;color:var(--ok);text-align:right}
+.sheet .av.mono{font-family:var(--f-mono);font-size:12px}
+
+/* ---------- intro / outro ---------- */
+.prose{padding:18px;display:flex;flex-direction:column;gap:12px;max-width:62ch}
+.prose p{margin:0;font-family:var(--f-read);font-size:16px;line-height:1.6;color:var(--ink-2)}
+.prose p strong{color:var(--ink);font-weight:500}
+.steps{display:grid;gap:10px;padding:0 18px 18px}
+.step{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:baseline}
+.step .k{font-family:var(--f-mono);font-size:11px;color:var(--live);letter-spacing:.1em}
+.step .v{font-size:13.5px;color:var(--ink-2)}
+.warnbox{margin:0 18px 18px;padding:11px 13px;border:1px solid var(--warn);border-radius:3px;
+  background:var(--warn-soft);color:var(--warn);font-size:13px;display:none}
+.warnbox.show{display:block}
+.linkout{display:block;margin:0 18px 18px;padding:11px 13px;border:1px dashed var(--line-2);
+  border-radius:3px;font-family:var(--f-mono);font-size:11px;color:var(--ink-2);
+  word-break:break-all;max-height:96px;overflow:auto}
+.hide{display:none!important}
+
+/* ---------- phones and tablets ---------- */
+body{-webkit-text-size-adjust:100%}
+button{touch-action:manipulation}
+@media (pointer:coarse){
+  .opt{padding:9px 14px;font-size:13.5px}
+  .btn{padding:11px 17px;font-size:14px}
+  .mic{padding:15px 24px;font-size:16px}
+}
+@media (max-width:640px){
+  .shell{padding:16px 12px 20px;gap:16px}
+  .mast h1{font-size:27px}
+  .panel-head{padding:11px 14px}
+  .passage{padding:16px 12px 6px}
+  .line{padding:8px 10px;font-size:16px}
+  .line.active{font-size:22px}
+  .scope-wrap{margin:6px 12px 0}
+  canvas#scope{height:84px}
+  .controls{padding:12px 14px;gap:9px}
+  .verdict{grid-template-columns:minmax(0,1fr);padding:13px 14px}
+  .sheet{padding:6px 14px 14px;max-height:none}
+  .sheet li{grid-template-columns:24px minmax(0,1fr);row-gap:2px}
+  .sheet .qt{white-space:normal}
+  .sheet .av{grid-column:2;text-align:left;font-size:12.5px}
+  .prose,.steps,.warnbox,.linkout{padding-left:14px;padding-right:14px}
+  .prose{padding-top:14px}
+  /* mic on its own full-width row, the rest underneath */
+  .stickybar{flex-wrap:wrap}
+  .stickybar .mic.wide{flex:1 0 100%;order:1}
+  .stickybar .btn{order:2;flex:1}
+  .stickybar .spacer{display:none}
+  .stickybar .status{order:3;flex:1 0 100%;text-align:left}
+  .line:not(.active):not(.done){opacity:.65}
+}
+/* the mic stays under your thumb */
+.stickybar{position:sticky;bottom:0;z-index:5;background:var(--surface);
+  border-top:1px solid var(--line);padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+.mic.wide{flex:1;justify-content:center}
+.vowelmap{width:100%;height:auto;display:block}
+</style>
+
+</head>
+<body>
+<div class="shell">
+
+  <header class="mast">
+    <div>
+      <p class="sub">Harvard Dialect Survey · spoken edition</p>
+      <h1>Say It Like You Say It</h1>
+    </div>
+    <div class="right">
+      <button class="btn" id="themeBtn" title="Switch theme">Theme</button>
+    </div>
+  </header>
+
+  <!-- ===== INTRO ===== -->
+  <section class="panel" id="introPanel">
+    <div class="panel-head"><h2>How this works</h2><span class="eyebrow">60 questions · ~10 minutes</span></div>
+    <div class="prose">
+      <p>The dialect quiz at <strong>mydialect.us</strong> asks you to pick answers off a list. This one asks you to <strong>talk</strong>. You read short lines aloud; where a word is up to you, the line stops and leaves you a gap to fill with whatever you'd actually say.</p>
+      <p>Everything you say is measured on this device — vowel formants, sibilant spectra, syllable nuclei, voicing — and turned into an IPA reading, which picks your answer for you. Nothing is uploaded except the speech-recognition transcript, which the browser handles.</p>
+      <p class="ios-note"><strong>On iPhone and iPad, use Safari itself.</strong> Every iOS browser runs on WebKit, but speech recognition is Safari's own — Chrome, Firefox and in-app browsers don't get it, and neither does a Home Screen shortcut. The 36 pronunciation questions work in any of them, since those are measured from the audio; the 24 word questions need Safari, or a tap. Turn on Settings → General → Keyboard → Enable Dictation, and expect to tap once to start each line: iOS only opens the microphone from a gesture, and hands it to one thing at a time.</p>
+    </div>
+    <div class="steps">
+      <div class="step"><span class="k">01</span><span class="v"><b>Calibration.</b> Eleven reference words tune the analyser to your own vowel space. Every later judgement is made relative to <em>your</em> vowels, not a General American yardstick.</span></div>
+      <div class="step"><span class="k">02</span><span class="v"><b>Read the lines.</b> One line at a time — tap to begin, and it stops itself when you stop talking.</span></div>
+      <div class="step"><span class="k">03</span><span class="v"><b>Check the verdict.</b> The IPA and the chosen answer appear, and are read back to you. Tap a different chip if it got you wrong.</span></div>
+      <div class="step"><span class="k">04</span><span class="v"><b>Submit.</b> All 60 answers are encoded and handed to the real quiz page, which draws your map.</span></div>
+    </div>
+    <div class="warnbox" id="capWarn"></div>
+    <div class="controls">
+      <button class="mic" id="startBtn"><span class="dot"></span>Start · allow the microphone</button>
+      <button class="btn" id="silentBtn">No microphone — tap answers instead</button>
+    </div>
+  </section>
+
+  <!-- ===== GAME ===== -->
+  <section class="panel hide" id="gamePanel">
+    <div class="panel-head">
+      <h2 id="roundName">Calibration</h2>
+      <span class="eyebrow" id="roundCount">round 1 of 13</span>
+    </div>
+
+    <div class="passage" id="passage"></div>
+
+    <div class="scope-wrap">
+      <canvas id="scope" width="1600" height="208"></canvas>
+      <span class="scope-tag" id="scopeTag">spectrogram · 0–5 kHz</span>
+      <span class="scope-lvl" id="scopeLvl">—</span>
+    </div>
+
+    <div class="controls stickybar">
+      <button class="mic wide" id="recBtn"><span class="dot"></span>Speak the line</button>
+      <button class="btn" id="againBtn">Say it again</button>
+      <button class="btn" id="skipBtn">Skip</button>
+      <span class="spacer"></span>
+      <span class="status" id="status">ready</span>
+    </div>
+
+    <div class="verdicts" id="verdicts"></div>
+  </section>
+
+  <!-- ===== PROGRESS TAPE ===== -->
+  <section class="panel" id="tapePanel">
+    <div class="panel-head"><h2>Answer sheet</h2><span class="tape-note" id="tapeNote">0 of 60</span></div>
+    <div style="padding:14px 18px 4px"><div class="tape" id="tape"></div></div>
+    <div class="sheet"><ol id="sheetList"></ol></div>
+    <div class="controls">
+      <button class="btn solid" id="submitBtn">Submit to mydialect.us</button>
+      <button class="btn" id="copyBtn">Copy the link instead</button>
+      <span class="spacer"></span>
+      <span class="status" id="subStatus"></span>
+    </div>
+    <div class="linkout hide" id="linkOut"></div>
+  </section>
+
+  <!-- ===== VOWEL SPACE ===== -->
+  <section class="panel hide" id="vowelPanel">
+    <div class="panel-head"><h2>Your vowel space</h2><span class="eyebrow">F1 × F2, measured from your calibration</span></div>
+    <div style="padding:14px 18px 20px"><svg class="vowelmap" id="vowelSvg" viewBox="0 0 560 340" role="img" aria-label="Scatter of your measured vowels by first and second formant"></svg></div>
+  </section>
+
+</div>
+
+<script>
+/* =====================================================================
+   PART 1 — signal processing
+   Everything here runs on Float32 PCM captured from the microphone.
+   ===================================================================== */
+const DSP = (() => {
+
+  /* ---- FFT (iterative radix-2, in-place) ---- */
+  function fft(re, im){
+    const n = re.length;
+    for(let i=1,j=0;i<n;i++){
+      let bit=n>>1;
+      for(;j&bit;bit>>=1) j^=bit;
+      j^=bit;
+      if(i<j){ [re[i],re[j]]=[re[j],re[i]]; [im[i],im[j]]=[im[j],im[i]]; }
+    }
+    for(let len=2;len<=n;len<<=1){
+      const ang=-2*Math.PI/len, wr=Math.cos(ang), wi=Math.sin(ang);
+      for(let i=0;i<n;i+=len){
+        let cr=1,ci=0;
+        for(let k=0;k<len/2;k++){
+          const ur=re[i+k], ui=im[i+k];
+          const vr=re[i+k+len/2]*cr-im[i+k+len/2]*ci;
+          const vi=re[i+k+len/2]*ci+im[i+k+len/2]*cr;
+          re[i+k]=ur+vr; im[i+k]=ui+vi;
+          re[i+k+len/2]=ur-vr; im[i+k+len/2]=ui-vi;
+          const ncr=cr*wr-ci*wi; ci=cr*wi+ci*wr; cr=ncr;
+        }
+      }
+    }
+  }
+  function magSpectrum(frame){
+    let n=1; while(n<frame.length) n<<=1;
+    const re=new Float64Array(n), im=new Float64Array(n);
+    for(let i=0;i<frame.length;i++) re[i]=frame[i]*(0.54-0.46*Math.cos(2*Math.PI*i/(frame.length-1)));
+    fft(re,im);
+    const half=n>>1, mag=new Float64Array(half);
+    for(let i=0;i<half;i++) mag[i]=Math.hypot(re[i],im[i]);
+    return mag;
+  }
+
+  /* ---- envelope & regions ---- */
+  function rmsEnvelope(buf, rate, winMs=20, hopMs=5){
+    const w=Math.round(rate*winMs/1000), h=Math.round(rate*hopMs/1000);
+    const out=[];
+    for(let i=0;i+w<=buf.length;i+=h){
+      let s=0; for(let k=0;k<w;k++){ const v=buf[i+k]; s+=v*v; }
+      out.push(Math.sqrt(s/w));
+    }
+    return {env:out, hop:h, win:w};
+  }
+  function smooth(a, k){
+    const out=new Array(a.length).fill(0);
+    for(let i=0;i<a.length;i++){
+      let s=0,n=0;
+      for(let j=Math.max(0,i-k);j<=Math.min(a.length-1,i+k);j++){ s+=a[j]; n++; }
+      out[i]=s/n;
+    }
+    return out;
+  }
+  /* Split a buffer into energetic regions separated by >gapMs of quiet. */
+  function segmentRegions(buf, rate, {gapMs=170, floorRatio=0.10, minMs=90}={}){
+    const {env,hop}=rmsEnvelope(buf,rate,20,5);
+    const sm=smooth(env,2);
+    const peak=Math.max(...sm), noise=percentile(sm,0.12);
+    const thr=Math.max(noise*2.6, peak*floorRatio, 1e-4);
+    const gapFrames=Math.round(gapMs/5), minFrames=Math.round(minMs/5);
+    const regs=[]; let start=-1, quiet=0;
+    for(let i=0;i<sm.length;i++){
+      if(sm[i]>thr){
+        if(start<0) start=i;
+        quiet=0;
+      } else if(start>=0){
+        quiet++;
+        if(quiet>=gapFrames){
+          const end=i-quiet;
+          if(end-start>=minFrames) regs.push({s:start*hop, e:(end+1)*hop});
+          start=-1; quiet=0;
+        }
+      }
+    }
+    if(start>=0 && sm.length-start>=minFrames) regs.push({s:start*hop, e:sm.length*hop});
+    return regs.map(r=>({s:Math.max(0,r.s), e:Math.min(buf.length,r.e)}));
+  }
+  function percentile(a,p){ const b=[...a].sort((x,y)=>x-y); return b[Math.floor(p*(b.length-1))]||0; }
+
+  /* ---- syllable nuclei: peaks in the 300–1000 Hz band envelope ---- */
+  function bandEnergy(buf, rate, region, lo, hi, winMs=25, hopMs=8){
+    const w=Math.round(rate*winMs/1000), h=Math.round(rate*hopMs/1000);
+    const out=[];
+    for(let i=region.s;i+w<=region.e;i+=h){
+      const mag=magSpectrum(buf.subarray(i,i+w));
+      const df=rate/(mag.length*2);
+      let s=0;
+      for(let k=Math.floor(lo/df);k<Math.min(mag.length,Math.ceil(hi/df));k++) s+=mag[k]*mag[k];
+      out.push(Math.sqrt(s));
+    }
+    return {vals:out, hop:h, start:region.s};
+  }
+  function syllableNuclei(buf, rate, region){
+    const b=bandEnergy(buf,rate,region,250,1100);
+    const v=smooth(b.vals,2);
+    if(!v.length) return [];
+    const mx=Math.max(...v);
+    if(mx<=0) return [];
+    const thr=mx*0.30, minGap=Math.round(95/8);
+    const peaks=[];
+    for(let i=1;i<v.length-1;i++){
+      if(v[i]>=v[i-1] && v[i]>v[i+1] && v[i]>thr){
+        // prominence: must dip 30% below the peak before the next one
+        const last=peaks[peaks.length-1];
+        if(last && i-last.i<minGap){ if(v[i]>v[last.i]) peaks[peaks.length-1]={i,v:v[i]}; continue; }
+        if(last){
+          let dip=Infinity;
+          for(let j=last.i;j<=i;j++) dip=Math.min(dip,v[j]);
+          if(dip > 0.62*Math.min(v[i],v[last.i])){ if(v[i]>v[last.i]) peaks[peaks.length-1]={i,v:v[i]}; continue; }
+        }
+        peaks.push({i,v:v[i]});
+      }
+    }
+    return peaks.map(p=>({
+      centre: b.start + p.i*b.hop,
+      level: p.v,
+      norm: p.v/mx
+    }));
+  }
+
+  /* ---- decimate to ~11 kHz for formant work ---- */
+  function decimate(buf, rate, target=11025){
+    const factor=Math.max(1, Math.round(rate/target));
+    if(factor===1) return {buf, rate};
+    // simple FIR low-pass (windowed sinc, 33 taps) at the new Nyquist
+    const taps=33, fc=0.5/factor, h=new Float64Array(taps);
+    let sum=0;
+    for(let i=0;i<taps;i++){
+      const m=i-(taps-1)/2;
+      const s=(m===0)?2*fc:Math.sin(2*Math.PI*fc*m)/(Math.PI*m);
+      const w=0.54-0.46*Math.cos(2*Math.PI*i/(taps-1));
+      h[i]=s*w; sum+=h[i];
+    }
+    for(let i=0;i<taps;i++) h[i]/=sum;
+    const outLen=Math.floor(buf.length/factor), out=new Float32Array(outLen);
+    for(let n=0;n<outLen;n++){
+      const c=n*factor; let acc=0;
+      for(let k=0;k<taps;k++){
+        const idx=c+k-((taps-1)>>1);
+        if(idx>=0 && idx<buf.length) acc+=h[k]*buf[idx];
+      }
+      out[n]=acc;
+    }
+    return {buf:out, rate:rate/factor};
+  }
+
+  /* ---- LPC (autocorrelation + Levinson–Durbin) ---- */
+  function lpc(frame, order){
+    const n=frame.length, r=new Float64Array(order+1);
+    for(let k=0;k<=order;k++){
+      let s=0;
+      for(let i=0;i+k<n;i++) s+=frame[i]*frame[i+k];
+      r[k]=s;
+    }
+    if(r[0]===0) return null;
+    r[0]*=1.0001; r[0]+=1e-9;
+    const a=new Float64Array(order+1); a[0]=1;
+    let err=r[0];
+    for(let i=1;i<=order;i++){
+      let acc=r[i];
+      for(let j=1;j<i;j++) acc+=a[j]*r[i-j];
+      const k=-acc/err;
+      const old=a.slice();
+      for(let j=1;j<i;j++) a[j]=old[j]+k*old[i-j];
+      a[i]=k;
+      err*=(1-k*k);
+      if(err<=0) return null;
+    }
+    return a;
+  }
+  /* Peak-pick the LPC envelope rather than root-solving — steadier on short frames. */
+  function formantsFromFrame(frame, rate, order){
+    const pre=new Float64Array(frame.length);
+    for(let i=1;i<frame.length;i++) pre[i]=frame[i]-0.97*frame[i-1];
+    for(let i=0;i<pre.length;i++) pre[i]*= (0.54-0.46*Math.cos(2*Math.PI*i/(pre.length-1)));
+    const a=lpc(pre, order);
+    if(!a) return null;
+    const N=700, fmax=Math.min(5000, rate/2), env=new Float64Array(N);
+    for(let i=0;i<N;i++){
+      const f=(i+1)*fmax/N, w=2*Math.PI*f/rate;
+      let re=0, im=0;
+      for(let k=0;k<a.length;k++){ re+=a[k]*Math.cos(-w*k); im+=a[k]*Math.sin(-w*k); }
+      env[i]=1/Math.max(1e-12, Math.hypot(re,im));
+    }
+    const peaks=[];
+    for(let i=1;i<N-1;i++) if(env[i]>env[i-1] && env[i]>=env[i+1]) peaks.push({f:(i+1)*fmax/N, a:env[i]});
+    const F=[];
+    for(const p of peaks){
+      if(p.f<180) continue;
+      if(F.length===0 && p.f>1100) { F.push(p.f); continue; }
+      if(F.length && p.f < F[F.length-1]+120) continue;
+      F.push(p.f);
+      if(F.length>=4) break;
+    }
+    return F;
+  }
+  /* Median F1/F2 across the steady middle of a region. */
+  function vowelFormants(buf, rate, s, e){
+    const d=decimate(buf.subarray(s,e), rate);
+    const b=d.buf, fr=d.rate;
+    if(b.length < fr*0.03) return null;
+    const a=Math.floor(b.length*0.28), z=Math.ceil(b.length*0.78);
+    const win=Math.round(fr*0.030), hop=Math.round(fr*0.010);
+    const order=Math.min(16, 2+Math.round(fr/1000));
+    const f1=[], f2=[];
+    for(let i=a;i+win<=z;i+=hop){
+      const F=formantsFromFrame(b.subarray(i,i+win), fr, order);
+      if(!F || F.length<2) continue;
+      if(F[0]>170 && F[0]<1150 && F[1]>F[0]+150 && F[1]<3300){ f1.push(F[0]); f2.push(F[1]); }
+    }
+    if(f1.length<2) return null;
+    const med=x=>{const y=[...x].sort((p,q)=>p-q);return y[y.length>>1];};
+    // trajectory: compare first third to last third (diphthong detector)
+    const third=Math.max(1,Math.floor(f1.length/3));
+    const early={f1:med(f1.slice(0,third)), f2:med(f2.slice(0,third))};
+    const late ={f1:med(f1.slice(-third)),  f2:med(f2.slice(-third))};
+    return {
+      f1:med(f1), f2:med(f2), n:f1.length,
+      early, late,
+      glide: Math.hypot((late.f1-early.f1)/120, (late.f2-early.f2)/220)
+    };
+  }
+
+  /* ---- fricatives ---- */
+  function fricationStats(buf, rate, s, e){
+    const win=Math.round(rate*0.025), hop=Math.round(rate*0.008);
+    let best=null;
+    for(let i=s;i+win<=e;i+=hop){
+      const mag=magSpectrum(buf.subarray(i,i+win));
+      const df=rate/(mag.length*2);
+      let lo=0, hi=0, num=0, den=0;
+      for(let k=1;k<mag.length;k++){
+        const f=k*df, p=mag[k]*mag[k];
+        if(f<600) lo+=p;
+        if(f>1800 && f<Math.min(11000,rate/2)){ hi+=p; num+=f*mag[k]; den+=mag[k]; }
+      }
+      const cog=den>0?num/den:0;
+      const hfRatio=hi/(lo+hi+1e-12);
+      if(hfRatio>0.55 && (!best || hi>best.hi)) best={i, hi, lo, cog, hfRatio, voicing: lo/(lo+hi+1e-12)};
+    }
+    return best;
+  }
+  /* Where in a region does the strongest frication sit (0 = start, 1 = end)? */
+  function fricationProfile(buf, rate, s, e){
+    const win=Math.round(rate*0.020), hop=Math.round(rate*0.006);
+    const pts=[];
+    for(let i=s;i+win<=e;i+=hop){
+      const mag=magSpectrum(buf.subarray(i,i+win));
+      const df=rate/(mag.length*2);
+      let lo=0, hi=0, num=0, den=0;
+      for(let k=1;k<mag.length;k++){
+        const f=k*df, p=mag[k]*mag[k];
+        if(f<600) lo+=p;
+        if(f>2500){ hi+=p; num+=f*mag[k]; den+=mag[k]; }
+      }
+      pts.push({pos:(i-s)/(e-s), hi, lo, cog:den>0?num/den:0, ratio:hi/(lo+hi+1e-12)});
+    }
+    return pts;
+  }
+  /* Silence/closure detection inside a region — stops, and the gap in an affricate. */
+  function closures(buf, rate, s, e, {minMs=22}={}){
+    const {env,hop}=rmsEnvelope(buf.subarray(s,e), rate, 10, 4);
+    const sm=smooth(env,1), mx=Math.max(...sm,1e-9), thr=mx*0.13;
+    const need=Math.round(minMs/4), out=[]; let run=0;
+    for(let i=0;i<sm.length;i++){
+      if(sm[i]<thr) run++;
+      else { if(run>=need) out.push({pos:(i-run/2)/sm.length, len:run*4}); run=0; }
+    }
+    if(run>=need) out.push({pos:1, len:run*4});
+    return out;
+  }
+  function totalEnergy(buf,s,e){ let t=0; for(let i=s;i<e;i++) t+=buf[i]*buf[i]; return t; }
+
+  return {fft, magSpectrum, rmsEnvelope, smooth, segmentRegions, syllableNuclei, bandEnergy,
+          decimate, vowelFormants, fricationStats, fricationProfile, closures, totalEnergy, percentile};
+})();
+</script>
+
+<script>
+/* =====================================================================
+   PART 2 - the 60 Standard-quiz questions, lifted verbatim from
+   mydialect.us (Harvard Dialect Survey, Vaux & Golder, CC BY-NC-SA 3.0)
+   ===================================================================== */
+const Q = {"q_105":{"t":"What is your generic term for a sweetened carbonated beverage?","o":[["a","soda"],["b","pop"],["c","coke"],["d","tonic"],["e","soft drink"],["f","lemonade"],["g","cocola"],["h","fizzy drink"],["i","dope"],["j","other"]]},"q_50":{"t":"What word(s) do you use to address a group of two or more people?","o":[["a","you all"],["b","yous, youse"],["c","you lot"],["d","you guys"],["e","you 'uns"],["f","yins"],["g","you"],["h","other"],["i","y'all"]]},"q_73":{"t":"What is your *general* term for the rubber-soled shoes worn in gym class, for athletic activities, etc.?","o":[["a","sneakers"],["b","shoes"],["c","gymshoes"],["d","sand shoes"],["e","jumpers"],["f","tennis shoes"],["g","running shoes"],["h","runners"],["i","trainers"],["j","I have no general word for this"],["k","other"]]},"q_64":{"t":"What do you call the long sandwich that contains cold cuts, lettuce, and so on?","o":[["a","sub"],["b","grinder"],["c","hoagie"],["d","hero"],["e","poor boy"],["f","bomber"],["g","Italian sandwich"],["h","baguette"],["i","sarney"],["j","I have no word for this"],["k","other"]]},"q_66":{"t":"What do you call the miniature lobster that one finds in lakes and streams for example (a crustacean of the family Astacidae)?","o":[["a","crawfish"],["b","crayfish"],["c","craw"],["d","crowfish"],["e","crawdad"],["f","mudbug"],["g","I have no word for this critter"],["h","other"]]},"q_74":{"t":"What do you call the little gray creature (that looks like an insect but is actually a crustacean) that rolls up into a ball when you touch it?","o":[["a","pill bug"],["b","doodle bug"],["c","potato bug"],["d","roly poly"],["e","sow bug"],["f","basketball bug"],["g","twiddle bug"],["h","roll-up bug"],["i","wood louse"],["j","millipede"],["k","centipede"],["l","I know what this creature is, but have no word for it"],["m","I have no idea what this creature is"],["n","other"]]},"q_65":{"t":"What do you call the insect that flies around in the summer and has a rear section that glows in the dark?","o":[["a","lightning bug"],["b","firefly"],["c","I use lightning bug and firefly interchangeably"],["d","peenie wallie"],["e","I have no word for this"],["f","other"]]},"q_103":{"t":"What do you call the thing from which you might drink water in a school?","o":[["a","bubbler"],["b","water bubbler"],["c","drinking fountain"],["d","water fountain"],["e","other"]]},"q_28":{"t":"Do you pronounce \"cot\" and \"caught\" the same?","o":[["a","different"],["b","same"]]},"q_15":{"t":"How do you pronounce Mary/merry/marry?","o":[["a","all 3 are the same"],["b","all 3 are different"],["c","Mary and merry are the same; marry is different"],["d","merry and marry are the same; Mary is different"],["e","Mary and marry are the same; merry is different"]]},"q_79":{"t":"What is your *general* term for a big road that you drive relatively fast on?","o":[["a","highway"],["b","freeway"],["c","parkway"],["d","turnpike"],["e","expressway"],["f","throughway/thru-way"],["g","a freeway is bigger than a highway"],["h","a freeway is free (i.e., doesn't charge tolls); a highway isn't"],["i","a freeway has limited access (no stop lights, no intersections), whereas a highway can have stop lights and intersections"],["j","other"]]},"q_21":{"t":"pecan","o":[["a","[pi:kæn] with stress on the first syllable (\"PEE-can\")"],["b","[pi:kæn] with stress on the second syllable (\"pee-CAN\")"],["c","[pi:kɑn] with stress on the first syllable (\"PEE-Kahn\")"],["d","[pi:kɑn] with stress on the second syllable (\"pee-KAHN\")"],["e","[pɪkæn] (\"pick Ann\")"],["f","[pɪkɑn] (\"pick Ahn\")"],["g","I pronounce it differently when it's alone than when it's in a compound like \"pecan pie\""],["h","other"]]},"q_94":{"t":"Do you say \"frosting\" or \"icing\" for the sweet spread one puts on a cake?","o":[["a","frosting"],["b","icing"],["c","icing is thinner than frosting, white, and/or made of powdered sugar and milk or lemon juice"],["d","both"],["e","neither"],["f","other"]]},"q_84":{"t":"What do you call a traffic situation in which several roads meet in a circle and you have to get off at a certain point?","o":[["a","rotary"],["b","roundabout"],["c","circle"],["d","traffic circle"],["e","traffic circus"],["f","I have no word for this"],["g","other"]]},"q_60":{"t":"What do you call the area of grass between the sidewalk and the road?","o":[["a","berm"],["b","parking"],["c","tree lawn"],["d","terrace"],["e","curb strip"],["f","beltway"],["g","verge"],["h","I have no word for this"],["i","other"]]},"q_58":{"t":"Which of these terms do you prefer for a sale of unwanted items on your porch, in your yard, etc.?","o":[["a","tag sale"],["b","yard sale"],["c","garage sale"],["d","rummage sale"],["e","thrift sale"],["f","stoop sale"],["g","carport sale"],["h","sidewalk sale"],["i","jumble (sale)"],["j","car boot sale"],["k","car boot"],["l","patio sale"],["m","other"]]},"q_110":{"t":"What do you call the night before Halloween?","o":[["a","gate night"],["b","trick night"],["c","mischief night"],["d","cabbage night"],["e","goosy night"],["f","devil's night"],["g","devil's eve"],["h","I have no word for this"],["i","other"]]},"q_41":{"t":"Do you use \"spigot\" or \"spicket\" to refer to a faucet or tap that water comes out of?","o":[["a","spicket"],["b","spigot"],["c","I use both interchangeably"],["d","I say \"spicket\" but spell it \"spigot\""],["e","I use both with different meanings"],["f","I don't use either version of this word"],["g","other"]]},"q_80":{"t":"What do you call it when rain falls while the sun is shining?","o":[["a","sunshower"],["b","the wolf is giving birth"],["c","the devil is beating his wife"],["d","monkey's wedding"],["e","fox's wedding"],["f","pineapple rain"],["g","liquid sun"],["h","I have no term or expression for this"],["i","other"]]},"q_75":{"t":"What do you call the wheeled contraption in which you carry groceries at the supermarket?","o":[["a","shopping cart"],["b","shopping wagon"],["c","grocery cart"],["d","shopping carriage"],["e","carriage"],["f","buggy"],["g","supermarket trolley"],["h","other"]]},"q_76":{"t":"What term do you use to refer to something that is across both streets from you at an intersection (or diagonally across from you in general)?","o":[["a","kitty-corner"],["b","kitacorner"],["c","catercorner"],["d","catty-corner"],["e","kitty cross"],["f","kitty wampus"],["g","I can only use \"diagonal\" for this"],["h","I have no term for this"],["i","other"]]},"q_109":{"t":"What do you call the paper container in which you might bring home items you bought at the store?","o":[["a","bag"],["b","sack"],["c","poke"],["d","other"]]},"q_49":{"t":"I ____ her lifeless body from the pool","o":[["a","dragged"],["b","drug"],["c","I use both interchangeably"],["d","other"]]},"q_63":{"t":"What do you call the drink made with milk and ice cream?","o":[["a","milkshake/shake"],["b","frappe"],["c","cabinet"],["d","velvet"],["e","thick shake"],["f","other"]]},"q_1":{"t":"aunt","o":[["a","[ɑ] as in \"ah\""],["b","[æ] as in \"ant\""],["c","[ɒ] as in \"caught\""],["d","I have the same vowel in \"ah\", \"caught\", and \"aunt\""],["e","I pronounce it the same as \"ain't\""],["f","I use [ɑ/ɒ] when referring to the general concept of an aunt, but [æ] when referring to a specific person by name."],["g","I use [æ] when referring to the general concept of an aunt, but [ɑ/ɒ] when referring to a specific person by name."],["h","other"]]},"q_2":{"t":"been","o":[["a","[ɪ] as in \"sit\""],["b","[i:] as in \"see\""],["c","[ɛ] as in \"set\""],["d","other"]]},"q_3":{"t":"the first vowel in \"Bowie knife\"","o":[["a","[o:] as in \"Bo\""],["b","[u:] as in \"boo\""],["c","I have seen this word in print, but have no idea how to pronounce it"],["d","I have never seen or heard this word"],["e","other"]]},"q_4":{"t":"caramel","o":[["a","with 2 syllables (\"car-ml\")"],["b","with 3 syllables (\"carra-mel\")"],["c","I use both interchangeably"],["d","I have both forms, but the two have different meanings"],["e","other"]]},"q_5":{"t":"the vowel in the second syllable of \"cauliflower\"","o":[["a","[i:] as in \"see\""],["b","[ɪ] as in \"sit\""],["c","other"]]},"q_6":{"t":"the last vowel in \"centaur\"","o":[["a","[ɑ] as in \"car\" (\"sen-tar\")"],["b","[ɒ] as in \"caught\""],["c","I use the same vowel in \"car\", \"caught\", and \"centaur\""],["d","rhymes with \"sore\" and \"more\" (\"sen-tore\")"],["e","other"]]},"q_7":{"t":"coupon","o":[["a","with [u:] as in \"coop\" (\"coopon\")"],["b","with [ju:] as in \"cute\" (\"cyoopon\")"],["c","other"]]},"q_8":{"t":"Craig (the name)","o":[["a","[ɛ] as in \"set\""],["b","[e:] as in \"say\""],["c","I say something in between the vowels in \"set\" and \"say\", but closer to the one in \"say\""],["d","I say something in between the vowels in \"set\" and \"say\", but closer to the one in \"set\""],["e","other"]]},"q_9":{"t":"crayon","o":[["a","[æ] as in \"man\" (1 syllable, \"cran\")"],["b","[ejɑ] (2 syllables, \"cray-ahn\")"],["c","[ejɒ] (2 syllables, \"cray-awn\", where the second syllable rhymes with \"dawn\")"],["d","[aw] (I pronounce this the same as \"crown\")"],["e","other"]]},"q_10":{"t":"creek (a small body of running water)","o":[["a","[i:] as in \"see\""],["b","[ɪ] as in \"sit\""],["c","I use both interchangeably"],["d","I don't know how to pronounce this word"],["e","I use both, but they mean two different things"],["f","other"]]},"q_11":{"t":"the first vowel in \"Florida\"","o":[["a","[o:] as in \"flow\" (\"flow-ri-da\")"],["b","[ɑ] as in \"ah\" (\"flah-ri-da\")"],["c","[ɒ] as in \"saw\" (\"flaw-ri-da\")"],["d","[ɔ] as in \"sore\" (\"flore-i-da\")"],["e","other"]]},"q_12":{"t":"flourish","o":[["a","[ə] as in \"bird\" (\"flurr-ish\")"],["b","[ɔ] as in \"sore\" (\"flore-ish\")"],["c","[ʌ] as in \"sun\" (\"fluh-rish\")"],["d","other (including if you use one pronunciation for the verb and a different pronunciation for the noun)"]]},"q_13":{"t":"the last vowel in \"handkerchief\"","o":[["a","[i:] as in \"see\""],["b","[ɪ] as in \"sit\""],["c","other"]]},"q_14":{"t":"lawyer","o":[["a","with [ɔj] as in \"boy\" (\"loyer\")"],["b","with [ɒ] as in \"saw\" (\"law-yer\")"],["c","I use both interchangeably"],["d","other"]]},"q_16":{"t":"mayonnaise","o":[["a","with [æ] as in \"man\" (2 syllables--\"man-aze\")"],["b","with [ejə] (3 syllables--\"may-uh-naze\")"],["c","I use both interchangeably"],["d","other"]]},"q_17":{"t":"the first vowel in \"miracle\"","o":[["a","[i:] as in \"near\""],["b","[ɪ] as in \"knit\""],["c","[ɛ] as in \"net\""],["d","I say something in between [ɪ] and [ɛ]"],["e","other"]]},"q_18":{"t":"mischievous vs. mischievious","o":[["a","mischievous (3 syllables)"],["b","mischievious (4 syllables)"],["c","I write \"mischievous\" but say \"mischievious\""],["d","I use both"],["e","other"]]},"q_19":{"t":"the final vowel in \"Monday,\" \"Friday,\" etc.","o":[["a","[e:] as in \"say\""],["b","[i:] as in \"see\""],["c","I use [e:] with the words in isolation, but [i:] in compounds (such as \"Sunday school\")"],["d","other (e.g. do you use one vowel in some day names, and another in the other names?)"]]},"q_20":{"t":"the second vowel in \"pajamas\"","o":[["a","[æ] as in \"jam\""],["b","[ɑ] as in \"father\""],["c","other"]]},"q_22":{"t":"poem","o":[["a","one syllable"],["b","two syllables"]]},"q_23":{"t":"really","o":[["a","[i:] as in \"see\" (\"reely\")"],["b","[ɪ] as in \"sit\" (\"rilly\")"],["c","[iə] (\"ree-l-y\")"],["d","other (including if you use two or more of these interchangeably)"]]},"q_24":{"t":"realtor (a real estate agent)","o":[["a","2 syllables (\"reel-ter\")"],["b","3 syllables (real[ə]tor, in other words \"reel-uh-ter\")"],["c","3 syllables (ree-l-ter)"],["d","I don't use this word; I use \"estate agent\""],["e","other"]]},"q_25":{"t":"roof, room, broom, root","o":[["a","[u:] as in \"food\""],["b","[ʊ] as in \"foot\""],["c","these four words do not all have the same vowel"]]},"q_26":{"t":"route (as in, \"the route from one place to another\")","o":[["a","rhymes with \"hoot\""],["b","rhymes with \"out\""],["c","I can pronounce it either way interchangeably"],["d","I say it like \"hoot\" for the noun and like \"out\" for the verb."],["e","I say it like \"out\" for the noun and like \"hoot\" for the verb."],["f","other"]]},"q_27":{"t":"the first vowel in \"syrup\"","o":[["a","[i] \"sear-up\""],["b","[ɪ] \"sih-rup\""],["c","[ə] as in \"sir\""],["d","other"]]},"q_29":{"t":"almond","o":[["a","all-mond (first syllable sounds like \"all\")"],["b","ah-mond (no l)"],["c","aw-mond (if different from \"ah-mond\")"],["d","I say something in between l and nothing"],["e","other"]]},"q_30":{"t":"the \"s\" in \"anniversary\"","o":[["a","[s] as in \"sock\""],["b","[ʃ] as in \"shock\""]]},"q_31":{"t":"asterisk","o":[["a","asteri[ks]"],["b","asteri[sk]"],["c","asteri[k] (with no s in the final cluster)"],["d","other"]]},"q_32":{"t":"candidate","o":[["a","I pronounce the first d"],["b","I don't pronounce the first d"],["c","I vary freely between pronouncing the first d and not doing so"],["d","I only pronounce the first d when I'm speaking slowly/carefully"],["e","Depends whether it refers to a political or generic candidate, as in \"that assignment looks like a good candidate for elimination\""],["f","other"]]},"q_33":{"t":"the \"s\" in \"chromosome\"","o":[["a","[s]"],["b","[z]"],["c","both are acceptable to me"],["d","other"]]},"q_34":{"t":"et cetera","o":[["a","pronounced e[ts]etera (4 syllables)"],["b","pronounced e[ts]etra (3 syllables)"],["c","pronounced eksetera (4 syllables)"],["d","pronounced eksetra (3 syllables)"],["e","other"]]},"q_35":{"t":"the final consonant in \"garage\"","o":[["a","[ʒ] as in the middle consonant of \"measure\""],["b","[dʒ] as in \"edge\""],["c","I use both interchangeably"],["d","other"]]},"q_36":{"t":"the \"c\" in \"grocery\"","o":[["a","[s] as in \"sock\""],["b","[ʃ] as in \"shock\""],["c","other"]]},"q_37":{"t":"huge, humor, humongous, human...","o":[["a","I pronounce the h"],["b","I don't pronounce the h"],["c","I can pronounce the h or not"],["d","other"]]},"q_38":{"t":"the \"s\" in \"nursery\"","o":[["a","[s] as in \"sock\""],["b","[ʃ] as in \"shock\""],["c","other"]]},"q_39":{"t":"the \"s\" in the last name of Elvis Presley","o":[["a","[s]"],["b","[z]"]]}};
+const QORDER = ["q_105","q_50","q_73","q_64","q_66","q_74","q_65","q_103","q_28","q_15","q_79","q_21","q_94","q_84","q_60","q_58","q_110","q_41","q_80","q_75","q_76","q_109","q_49","q_63","q_1","q_2","q_3","q_4","q_5","q_6","q_7","q_8","q_9","q_10","q_11","q_12","q_13","q_14","q_16","q_17","q_18","q_19","q_20","q_22","q_23","q_24","q_25","q_26","q_27","q_29","q_30","q_31","q_32","q_33","q_34","q_35","q_36","q_37","q_38","q_39"];
+</script>
+
+<script>
+/* =====================================================================
+   PART 3 — from sound to answer
+   Each phonetic target owns a small function that reads the measured
+   signal and returns an option id, an IPA reading and a confidence.
+   ===================================================================== */
+
+/* Bark scale keeps vowel distances perceptually sane. */
+const bark = f => 13*Math.atan(0.00076*f) + 3.5*Math.atan(Math.pow(f/7500,2));
+
+const H = {
+  /* nearest calibrated vowel of this speaker */
+  classify(cal, f1, f2, only){
+    const keys = Object.keys(cal.vowels).filter(k => !only || only.includes(k));
+    let best=null, second=null;
+    for(const k of keys){
+      const v=cal.vowels[k];
+      const d=Math.hypot(bark(f1)-bark(v.f1), (bark(f2)-bark(v.f2))*0.85);
+      if(!best || d<best.d){ second=best; best={sym:k,d}; }
+      else if(!second || d<second.d) second={sym:k,d};
+    }
+    if(!best) return null;
+    const margin = second ? (second.d-best.d)/Math.max(0.4,best.d) : 1;
+    return {sym:best.sym, d:best.d, second:second&&second.sym, conf: Math.min(1, 0.35+margin*0.5)};
+  },
+  /* formants around nucleus #i (1-based; negative counts from the end) */
+  vowelAt(ctx, idx){
+    const nuc=ctx.nuclei;
+    if(!nuc.length) return null;
+    let i = idx<0 ? nuc.length+idx : idx-1;
+    i = Math.max(0, Math.min(nuc.length-1, i));
+    const c=nuc[i].centre, half=Math.round(ctx.rate*0.045);
+    const s=Math.max(ctx.region.s, c-half), e=Math.min(ctx.region.e, c+half);
+    const fm=DSP.vowelFormants(ctx.buf, ctx.rate, s, e);
+    if(fm) fm.nucleusIndex=i;
+    return fm;
+  },
+  /* strongest sibilant in the region, called s or ʃ against this speaker's own pair */
+  sibilant(ctx){
+    const f=DSP.fricationStats(ctx.buf, ctx.rate, ctx.region.s, ctx.region.e);
+    if(!f) return null;
+    const S=ctx.cal.sib.s, SH=ctx.cal.sib.sh;
+    const mid=(S+SH)/2;
+    const sym = f.cog > mid ? 's' : 'ʃ';
+    const conf = Math.min(1, 0.4 + Math.abs(f.cog-mid)/Math.max(400,Math.abs(S-SH))*0.9);
+    return {sym, cog:Math.round(f.cog), conf, voicing:f.voicing};
+  },
+  /* voiced or voiceless frication, against the speaker's own sock/zoo pair */
+  fricVoice(ctx){
+    const f=DSP.fricationStats(ctx.buf, ctx.rate, ctx.region.s, ctx.region.e);
+    if(!f) return null;
+    const vS=ctx.cal.sib.vS, vZ=ctx.cal.sib.vZ, mid=(vS+vZ)/2;
+    const sym = f.voicing > mid ? 'z' : 's';
+    const conf = Math.min(1, 0.4 + Math.abs(f.voicing-mid)/Math.max(0.05,Math.abs(vZ-vS))*0.8);
+    return {sym, ratio:+f.voicing.toFixed(3), conf};
+  },
+  nsyll(ctx){ return ctx.nuclei.length; },
+  fmt(fm){ return fm ? `F1 ${Math.round(fm.f1)} Hz · F2 ${Math.round(fm.f2)} Hz` : 'no clear vowel'; },
+  pick(map, sym, fallback){ return (sym!=null && map[sym]) ? map[sym] : fallback; }
+};
+
+/* Build a vowel verdict in one line. */
+function vowelVerdict(ctx, nucIdx, map, fallback, label){
+  const fm=H.vowelAt(ctx, nucIdx);
+  if(!fm) return {opt:fallback, ipa:'—', detail:'no steady vowel found', conf:0.15};
+  const c=H.classify(ctx.cal, fm.f1, fm.f2);
+  const opt=H.pick(map, c.sym, fallback);
+  return {
+    opt,
+    ipa:`[${c.sym}]`,
+    detail:`${label||'vowel'} · ${H.fmt(fm)} · nearest of your own vowels: [${c.sym}]` +
+           (c.second?` (next closest [${c.second}])`:'') +
+           (fm.glide>1.0?` · gliding, Δ${fm.glide.toFixed(1)}`:''),
+    conf:c.conf, fm, cls:c
+  };
+}
+function syllVerdict(ctx, map, fallback){
+  const n=H.nsyll(ctx);
+  return {opt: map[n]||fallback, ipa:`${n} syll`, detail:`${n} syllable nucleus${n===1?'':'es'} detected in the vowel band`, conf: n>0?0.72:0.2, n};
+}
+</script>
+
+<script>
+/* =====================================================================
+   PART 4 — the script: what you say, and what gets measured
+   ===================================================================== */
+const ROUNDS = [
+
+/* ---------------------------------------------------------------- 0 */
+{ name:'Calibration', kind:'cal', blurb:'Eleven words that pin down your own vowel space, and three that pin down your sibilants. Say each one on its own, with a clear beat between them.',
+  lines:[
+    {say:'bee — bit — bet — bat', hint:'Four separate words. Leave a gap between each.', cal:['i','ɪ','ɛ','æ']},
+    {say:'bar — cot — caught — but', hint:'Four separate words again.', cal:['ɑ','ɒ','ɔ','ʌ'], targets:[{q:'q_28', kind:'merger-cal'}]},
+    {say:'book — boot — bird', hint:'Three separate words.', cal:['ʊ','u','ɜ']},
+    {say:'sock — shock — zoo', hint:'Three separate words. These set the s / sh / z references.', calSib:true},
+    {say:'Mary — merry — marry', hint:'Three separate words, however they come out.', targets:[{q:'q_15', kind:'merger3'}]}
+  ]},
+
+/* ---------------------------------------------------------------- 1 */
+{ name:'The corner shop', kind:'lex', blurb:'Read each line and drop your own word into the gap.',
+  lines:[
+    {q:'q_105', pre:'On the table there was a glass of sweetened carbonated drink — a glass of', post:'.',
+     match:[[/fizzy/,'h'],[/soft drink/,'e'],[/\bpop\b/,'b'],[/\bsoda\b/,'a'],[/coke|cola/,'c'],[/lemonade/,'f'],[/tonic/,'d'],[/dope/,'i']], dflt:'j'},
+    {q:'q_109', pre:'At the till they packed the lot into a paper', post:'.',
+     match:[[/\bbag\b/,'a'],[/\bsack\b/,'b'],[/\bpoke\b/,'c']], dflt:'d'},
+    {q:'q_75', pre:'I had pushed it all round the shop in a big wheeled', post:'.',
+     match:[[/trolley/,'g'],[/shopping cart/,'a'],[/shopping wagon/,'b'],[/grocery cart/,'c'],[/shopping carriage/,'d'],[/carriage/,'e'],[/buggy/,'f'],[/\bcart\b/,'a']], dflt:'h'},
+    {q:'q_63', pre:'And to drink with it, milk blended with ice cream — a', post:'.',
+     match:[[/thick ?shake/,'e'],[/milk ?shake|\bshake\b/,'a'],[/frappe|frappé/,'b'],[/cabinet/,'c'],[/velvet/,'d']], dflt:'f'}
+  ]},
+
+/* ---------------------------------------------------------------- 2 */
+{ name:'Out and about', kind:'lex',
+  lines:[
+    {q:'q_79', pre:'To cross the country quickly you get on a big fast road — a', post:'.',
+     match:[[/motorway|dual carriage/,'j'],[/highway/,'a'],[/freeway/,'b'],[/parkway/,'c'],[/turnpike/,'d'],[/expressway/,'e'],[/thru ?way|through ?way/,'f']], dflt:'j'},
+    {q:'q_84', pre:'Where several roads meet in a circle and you drive round and come off — that is a', post:'.',
+     match:[[/roundabout/,'b'],[/rotary/,'a'],[/traffic circle/,'d'],[/traffic circus/,'e'],[/circle/,'c'],[/island/,'g']], dflt:'g'},
+    {q:'q_60', pre:'The strip of grass between the pavement and the road is called the', post:'.',
+     match:[[/verge/,'g'],[/berm/,'a'],[/tree lawn/,'c'],[/terrace/,'d'],[/curb strip|kerb strip/,'e'],[/beltway/,'f'],[/parking/,'b'],[/nothing|no word|no name|don'?t have/,'h']], dflt:'i'},
+    {q:'q_76', pre:'The house across both roads from mine, on the far corner of the crossroads, is', post:'from me.',
+     match:[[/kitty ?cross/,'e'],[/kitty ?wampus|catty ?wampus/,'f'],[/kitty ?corner/,'a'],[/kitacorner/,'b'],[/cater ?corner|catercorner/,'c'],[/catty ?corner/,'d'],[/diagonal/,'g'],[/nothing|no word|no term/,'h']], dflt:'i'}
+  ]},
+
+/* ---------------------------------------------------------------- 3 */
+{ name:'Small creatures', kind:'lex',
+  lines:[
+    {q:'q_66', pre:'In the stream there is a little freshwater lobster — a', post:'.',
+     match:[[/crayfish/,'b'],[/crawfish/,'a'],[/crawdad/,'e'],[/mudbug/,'f'],[/crowfish/,'d'],[/\bcraw\b/,'c'],[/no word|no idea|don'?t know/,'g']], dflt:'h'},
+    {q:'q_74', pre:'Under the log, the little grey armoured thing that rolls into a ball — a', post:'.',
+     match:[[/wood ?louse|wood ?lice/,'i'],[/roly ?poly|rolie|roley/,'d'],[/pill ?bug/,'a'],[/doodle ?bug/,'b'],[/potato bug/,'c'],[/sow ?bug/,'e'],[/basketball/,'f'],[/twiddle/,'g'],[/roll ?up/,'h'],[/millipede/,'j'],[/centipede/,'k'],[/no word|no name/,'l'],[/no idea/,'m']], dflt:'n'},
+    {q:'q_65', pre:'The American summer beetle whose back end glows in the dark is a', post:'.',
+     match:[[/fire ?fly|fire ?flies/,'b'],[/lightning ?bug/,'a'],[/both|interchange/,'c'],[/peenie/,'d'],[/no word|nothing/,'e']], dflt:'f'},
+    {q:'q_103', pre:'At school you would go and get a drink of water from the', post:'.',
+     match:[[/water bubbler/,'b'],[/bubbler/,'a'],[/drinking fountain/,'c'],[/water fountain/,'d'],[/fountain/,'d'],[/\btap\b|sink/,'e']], dflt:'e'}
+  ]},
+
+/* ---------------------------------------------------------------- 4 */
+{ name:'Shoes, sandwiches, cake', kind:'lex',
+  lines:[
+    {q:'q_73', pre:'For games at school you need the rubber-soled ones — a pair of', post:'.',
+     match:[[/trainers/,'i'],[/sneakers/,'a'],[/gym ?shoes/,'c'],[/sand ?shoes/,'d'],[/jumpers/,'e'],[/tennis shoes/,'f'],[/running shoes/,'g'],[/runners/,'h'],[/plimsolls|pumps|daps/,'k'],[/\bshoes\b/,'b']], dflt:'k'},
+    {q:'q_64', pre:'A long bread roll full of cold meat and salad is a', post:'.',
+     match:[[/baguette/,'h'],[/\bsub\b|submarine/,'a'],[/grinder/,'b'],[/hoagie/,'c'],[/\bhero\b/,'d'],[/poor ?boy|po ?boy/,'e'],[/bomber/,'f'],[/italian/,'g'],[/sarnie|sarney/,'i'],[/no word/,'j']], dflt:'k'},
+    {q:'q_94', pre:'The sweet stuff you spread over the top of a cake is', post:'.',
+     match:[[/icing/,'b'],[/frosting/,'a'],[/\bboth\b/,'d'],[/neither/,'e'],[/butter ?cream/,'f']], dflt:'f'},
+    {q:'q_58', pre:'Selling your unwanted things off a table or out of the car is a', post:'.',
+     match:[[/car ?boot sale/,'j'],[/car ?boot/,'k'],[/jumble/,'i'],[/tag sale/,'a'],[/yard sale/,'b'],[/garage sale/,'c'],[/rummage/,'d'],[/thrift/,'e'],[/stoop/,'f'],[/carport/,'g'],[/sidewalk/,'h'],[/patio/,'l']], dflt:'m'}
+  ]},
+
+/* ---------------------------------------------------------------- 5 */
+{ name:'Odds and ends', kind:'lex',
+  lines:[
+    {q:'q_50', pre:'Speaking to two or more people at once, I would call them', post:'.',
+     match:[[/you lot/,'c'],[/y'? ?all|yall/,'i'],[/you all/,'a'],[/yous|youse/,'b'],[/you guys/,'d'],[/you ?'?uns/,'e'],[/yins|yinz/,'f'],[/everyone|everybody|folks|lads|chaps|people/,'h'],[/\byou\b/,'g']], dflt:'h'},
+    {q:'q_110', pre:'The night before Halloween, the thirtieth of October, I call', post:'.',
+     match:[[/mischief night/,'c'],[/gate night/,'a'],[/trick night/,'b'],[/cabbage/,'d'],[/goosy|goosey/,'e'],[/devil'?s night/,'f'],[/devil'?s eve/,'g'],[/nothing|no word|no name|don'?t have|not a thing|the thirtieth|hallowe?en eve/,'h']], dflt:'i'},
+    {q:'q_80', pre:'Rain falling while the sun is still shining — I call that', post:'.',
+     match:[[/sun ?shower/,'a'],[/wolf/,'b'],[/beating his wife/,'c'],[/monkey'?s wedding/,'d'],[/fox'?s wedding/,'e'],[/pineapple/,'f'],[/liquid sun/,'g'],[/nothing|no word|no term|don'?t have|sun and rain|a rainbow/,'h']], dflt:'i'},
+    {q:'q_41', pre:'The outdoor thing the hose screws onto, that water comes out of, I call a', post:'.',
+     match:[[/spicket/,'a'],[/spigot/,'b'],[/\bboth\b/,'c'],[/neither|outside tap|garden tap|\btap\b|standpipe|don'?t use/,'f']], dflt:'g'},
+    {q:'q_49', pre:'I', post:'her lifeless body from the pool.', hint:'Say the whole sentence with your own past tense in the gap.',
+     match:[[/dragged/,'a'],[/\bdrug\b/,'b'],[/\bboth\b/,'c'],[/pulled|hauled|dragged/,'a']], dflt:'d'},
+    {q:'q_24', pre:'Someone whose job is selling houses is called a', post:'.',
+     match:[[/realtor|realter|realator/,'a'],[/estate agent/,'d'],[/real estate/,'e']], dflt:'e'}
+  ]},
+
+/* ---------------------------------------------------------------- 6 */
+{ name:'Sibilants', kind:'phon', blurb:'Six lines, each ending on the word being measured. Pause at the dash, then say the last word cleanly.',
+  lines:[
+    {say:'Ten years married today. Happy —', word:'anniversary',
+     targets:[{q:'q_30', fn:c=>{const s=H.sibilant(c); return s?{opt:s.sym==='s'?'a':'b', ipa:`[${s.sym}]`, detail:`spectral centre of gravity ${s.cog} Hz — your [s] sits at ${Math.round(c.cal.sib.s)} Hz, your [ʃ] at ${Math.round(c.cal.sib.sh)} Hz`, conf:s.conf}:null;}}]},
+    {say:'In America they do not say supermarket, they say —', word:'grocery',
+     targets:[{q:'q_36', fn:c=>{const s=H.sibilant(c); return s?{opt:s.sym==='s'?'a':'b', ipa:`[${s.sym}]`, detail:`centre of gravity ${s.cog} Hz`, conf:s.conf}:null;}}]},
+    {say:'The room where the baby sleeps is the —', word:'nursery',
+     targets:[{q:'q_38', fn:c=>{const s=H.sibilant(c); return s?{opt:s.sym==='s'?'a':'b', ipa:`[${s.sym}]`, detail:`centre of gravity ${s.cog} Hz`, conf:s.conf}:null;}}]},
+    {say:'Every cell keeps its DNA coiled up in a —', word:'chromosome',
+     targets:[{q:'q_33', fn:c=>{const v=H.fricVoice(c); return v?{opt:v.sym==='s'?'a':'b', ipa:`[${v.sym}]`, detail:`low-frequency energy through the frication: ${v.ratio} — your [s] ${c.cal.sib.vS.toFixed(3)}, your [z] ${c.cal.sib.vZ.toFixed(3)}`, conf:v.conf}:null;}}]},
+    {say:'The King of Rock and Roll was Elvis —', word:'Presley',
+     targets:[{q:'q_39', fn:c=>{const v=H.fricVoice(c); return v?{opt:v.sym==='s'?'a':'b', ipa:`[${v.sym}]`, detail:`voicing ratio ${v.ratio}`, conf:v.conf}:null;}}]},
+    {say:'I keep the car in the —', word:'garage',
+     targets:[{q:'q_35', fn:c=>{
+        const prof=DSP.fricationProfile(c.buf,c.rate,c.region.s,c.region.e);
+        const tail=prof.filter(p=>p.pos>0.55);
+        const peak=tail.reduce((a,b)=>b.ratio>(a?a.ratio:0)?b:a, null);
+        const gap=DSP.closures(c.buf,c.rate,c.region.s,c.region.e).filter(x=>x.pos>0.45&&x.pos<0.92);
+        const affr=gap.length>0;
+        return {opt: affr?'b':'a', ipa: affr?'[dʒ]':'[ʒ]',
+          detail:`${affr?`a ${Math.round(gap[0].len)} ms closure before the final frication — an affricate`:'frication with no stop closure before it'}${peak?` · centre of gravity ${Math.round(peak.cog)} Hz`:''}`,
+          conf: affr?0.62:0.55};
+     }}]}
+  ]},
+
+/* ---------------------------------------------------------------- 7 */
+{ name:'Clusters and hidden consonants', kind:'phon',
+  lines:[
+    {say:'The little star symbol on the keyboard is an —', word:'asterisk',
+     targets:[{q:'q_31', fn:c=>{
+        const prof=DSP.fricationProfile(c.buf,c.rate,c.region.s,c.region.e).filter(p=>p.pos>0.6);
+        if(!prof.length) return {opt:'d', ipa:'—', detail:'no final cluster found', conf:0.2};
+        const mx=Math.max(...prof.map(p=>p.ratio));
+        const hiss=prof.filter(p=>p.ratio>Math.max(0.55,mx*0.7));
+        if(!hiss.length) return {opt:'c', ipa:'[…k]', detail:'no sibilant in the final cluster', conf:0.4};
+        const first=hiss[0].pos, last=hiss[hiss.length-1].pos;
+        const gaps=DSP.closures(c.buf,c.rate,c.region.s,c.region.e).filter(x=>x.pos>0.6);
+        const burstAfter = gaps.some(g=>g.pos>last-0.02);
+        return {opt: burstAfter?'b':'a', ipa: burstAfter?'[…sk]':'[…ks]',
+          detail:`final sibilant runs from ${(first*100).toFixed(0)}% to ${(last*100).toFixed(0)}% of the word; stop closure ${burstAfter?'after':'before'} it`, conf:0.45};
+     }}]},
+    {say:'Standing for election makes you a —', word:'candidate',
+     targets:[{q:'q_32', fn:c=>{
+        const n=H.nsyll(c);
+        const gaps=DSP.closures(c.buf,c.rate,c.region.s,c.region.e,{minMs:18}).filter(x=>x.pos>0.28&&x.pos<0.7);
+        const has=gaps.length>0;
+        return {opt: has?'a':'b', ipa: has?'[kændɪdeɪt]':'[kænɪdeɪt]',
+          detail:`${n} syllables · ${has?`a ${Math.round(gaps[0].len)} ms stop closure after the nasal — the first d is there`:'no stop closure after the nasal — the first d is dropped'}`, conf:0.5};
+     }}]},
+    {say:'And so on, and so on, —', word:'et cetera', hint:'Say "et cetera" in full, not "etc".',
+     targets:[{q:'q_34', fn:c=>{const v=syllVerdict(c,{4:'a',3:'b'},'e'); v.conf=0.45; v.detail+=' (counted on the final chunk only)'; return v;}}]},
+    {say:'That is not just big, that is —', word:'huge',
+     targets:[{q:'q_37', fn:c=>{
+        const {env,hop}=DSP.rmsEnvelope(c.buf.subarray(c.region.s,c.region.e), c.rate, 12, 4);
+        const sm=DSP.smooth(env,1), mx=Math.max(...sm,1e-9);
+        const nuc=c.nuclei[0];
+        const nucFrame=nuc?Math.round((nuc.centre-c.region.s)/hop):Math.floor(sm.length/2);
+        let onset=0; for(let i=0;i<nucFrame;i++){ if(sm[i]>mx*0.10){ onset=i; break; } }
+        const preLen=(nucFrame-onset)*4;
+        const prof=DSP.fricationProfile(c.buf,c.rate,c.region.s,c.region.s+Math.max(1,(nucFrame*hop)));
+        const breathy=prof.some(p=>p.ratio>0.5);
+        const has = preLen>55 && breathy;
+        return {opt: has?'a':'b', ipa: has?'[hjuːdʒ]':'[juːdʒ]',
+          detail:`${Math.round(preLen)} ms of pre-vocalic noise${breathy?', broadband — an [h] is being made':', no broadband friction'}`, conf:0.45};
+     }}]},
+    {say:'The nut you find inside marzipan is an —', word:'almond',
+     targets:[{q:'q_29', fn:c=>{
+        const fm=H.vowelAt(c,1);
+        if(!fm) return {opt:'e', ipa:'—', detail:'no clear first vowel', conf:0.15};
+        const cls=H.classify(c.cal, fm.f1, fm.f2);
+        const lateral = fm.late.f2 < fm.early.f2-140 && fm.late.f2 < 1300;
+        const opt = lateral ? 'a' : (cls.sym==='ɑ' ? 'b' : (cls.sym==='ɔ'||cls.sym==='ɒ' ? 'c' : 'e'));
+        return {opt, ipa: lateral?'[ɑːl-]':`[${cls.sym}]`,
+          detail:`${H.fmt(fm)} → [${cls.sym}]; F2 ${lateral?`falls to ${Math.round(fm.late.f2)} Hz — a dark [l] is in there`:'stays level — no [l]'}`, conf:0.5};
+     }}]}
+  ]},
+
+/* ---------------------------------------------------------------- 8 */
+{ name:'Counting syllables', kind:'phon',
+  lines:[
+    {say:'Boiled sugar and butter, chewy and golden —', word:'caramel',
+     targets:[{q:'q_4', fn:c=>syllVerdict(c,{2:'a',3:'b'},'e')}]},
+    {say:'The pale sauce that goes on chips —', word:'mayonnaise',
+     targets:[{q:'q_16', fn:c=>syllVerdict(c,{2:'a',3:'b'},'d')}]},
+    {say:'The cat is up to no good again, thoroughly —', word:'mischievous',
+     targets:[{q:'q_18', fn:c=>syllVerdict(c,{3:'a',4:'b'},'e')}]},
+    {say:'Fourteen rhyming lines make a sonnet, and a sonnet is a —', word:'poem',
+     targets:[{q:'q_22', fn:c=>syllVerdict(c,{1:'a',2:'b'},'b')}]},
+    {say:'Children colour things in with a wax —', word:'crayon',
+     targets:[{q:'q_9', fn:c=>{
+        const n=H.nsyll(c), fm=H.vowelAt(c, n>=2?2:1);
+        if(!fm) return {opt:'e', ipa:`${n} syll`, detail:'syllables counted, vowel unclear', conf:0.25};
+        const cls=H.classify(c.cal, fm.f1, fm.f2);
+        if(n<=1) return {opt: fm.glide>1.4?'d':'a', ipa:`[${cls.sym}]`, detail:`one syllable · ${H.fmt(fm)}`, conf:0.5};
+        const opt = cls.sym==='ɑ' ? 'b' : (cls.sym==='ɒ'||cls.sym==='ɔ' ? 'c' : 'e');
+        return {opt, ipa:`[eɪ${cls.sym}]`, detail:`${n} syllables · second vowel ${H.fmt(fm)} → [${cls.sym}]`, conf:cls.conf*0.9};
+     }}]}
+  ]},
+
+/* ---------------------------------------------------------------- 9 */
+{ name:'Stress and colour', kind:'phon',
+  lines:[
+    {say:'That American pie made with nuts is —', word:'pecan',
+     targets:[{q:'q_21', fn:c=>{
+        const nuc=c.nuclei;
+        if(nuc.length<2) return {opt:'h', ipa:'—', detail:'could not find two syllables', conf:0.2};
+        const v1=H.vowelAt(c,1), v2=H.vowelAt(c,2);
+        const first = nuc[0].level>nuc[1].level;
+        const c1=v1?H.classify(c.cal,v1.f1,v1.f2):null;
+        const c2=v2?H.classify(c.cal,v2.f1,v2.f2):null;
+        let opt;
+        if(c1 && (c1.sym==='ɪ')) opt = (c2&&(c2.sym==='ɑ'||c2.sym==='ɒ')) ? 'f' : 'e';
+        else if(c2 && (c2.sym==='ɑ'||c2.sym==='ɒ'||c2.sym==='ɔ')) opt = first?'c':'d';
+        else opt = first?'a':'b';
+        return {opt, ipa:`[${c1?c1.sym:'?'}${c2?c2.sym:'?'}] stress ${first?'1st':'2nd'}`,
+          detail:`syllable 1 ${Math.round(nuc[0].norm*100)}% level → [${c1?c1.sym:'?'}]; syllable 2 ${Math.round(nuc[1].norm*100)}% → [${c2?c2.sym:'?'}]`,
+          conf:0.5};
+     }}]},
+    {say:'The striped things you sleep in —', word:'pyjamas', hint:'Pajamas, pyjamas, however you say it.',
+     targets:[{q:'q_20', fn:c=>vowelVerdict(c, 2, {'æ':'a','ɑ':'b','ɒ':'b'}, 'c', 'second vowel')}]},
+    {say:'My mother’s sister is my —', word:'aunt',
+     targets:[{q:'q_1', fn:c=>vowelVerdict(c, 1, {'ɑ':'a','æ':'b','ɒ':'c','ɔ':'c'}, 'h', 'vowel')}]},
+    {say:'Where on earth have you —', word:'been',
+     targets:[{q:'q_2', fn:c=>vowelVerdict(c, 1, {'ɪ':'a','i':'b','ɛ':'c'}, 'd', 'vowel')}]},
+    {say:'You get money off at the till if you bring the —', word:'coupon',
+     targets:[{q:'q_7', fn:c=>{
+        const fm=H.vowelAt(c,1);
+        if(!fm) return {opt:'c', ipa:'—', detail:'no clear first vowel', conf:0.2};
+        const yod = fm.early.f2 > fm.late.f2 + 320 && fm.early.f2 > 1500;
+        return {opt: yod?'b':'a', ipa: yod?'[kjuː-]':'[kuː-]',
+          detail:`F2 starts at ${Math.round(fm.early.f2)} Hz and ${yod?`falls to ${Math.round(fm.late.f2)} Hz — a [j] glide`:`sits at ${Math.round(fm.late.f2)} Hz — no [j] glide`}`, conf:0.5};
+     }}]}
+  ]},
+
+/* --------------------------------------------------------------- 10 */
+{ name:'Long and short', kind:'phon',
+  lines:[
+    {say:'The little stream at the bottom of the field is a —', word:'creek',
+     targets:[{q:'q_10', fn:c=>vowelVerdict(c, 1, {'i':'a','ɪ':'b'}, 'f', 'vowel')}]},
+    {say:'roof — room — broom — root', hint:'Four separate words, with a beat between each.', words:4,
+     targets:[{q:'q_25', kind:'four-vowels'}]},
+    {say:'The way you take from A to B is the —', word:'route',
+     targets:[{q:'q_26', fn:c=>{
+        const fm=H.vowelAt(c,1);
+        if(!fm) return {opt:'f', ipa:'—', detail:'no clear vowel', conf:0.2};
+        const cls=H.classify(c.cal, fm.f1, fm.f2);
+        const diph = fm.glide>1.5 && fm.early.f1 > fm.late.f1+90;
+        const opt = diph ? 'b' : (cls.sym==='u'||cls.sym==='ʊ' ? 'a' : 'f');
+        return {opt, ipa: diph?'[aʊt]':`[r${cls.sym}t]`,
+          detail:`${H.fmt(fm)} → [${cls.sym}]${diph?` · strong glide (F1 ${Math.round(fm.early.f1)}→${Math.round(fm.late.f1)} Hz) — rhymes with "out"`:' · steady — rhymes with "hoot"'}`, conf:0.55};
+     }}]},
+    {say:'The big knife that Jim carried is called a —', word:'Bowie',
+     targets:[{q:'q_3', fn:c=>{
+        const fm=H.vowelAt(c,1);
+        if(!fm) return {opt:'e', ipa:'—', detail:'no clear first vowel', conf:0.2};
+        const cls=H.classify(c.cal, fm.f1, fm.f2, ['u','ʊ','ɔ','ɒ','ɑ','ʌ']);
+        const opt = (cls.sym==='u'||cls.sym==='ʊ') ? 'b' : 'a';
+        return {opt, ipa: opt==='b'?'[buːi]':'[bəʊi]', detail:`${H.fmt(fm)} → nearest [${cls.sym}]`, conf:cls.conf*0.85};
+     }}]}
+  ]},
+
+/* --------------------------------------------------------------- 11 */
+{ name:'Vowels in the wild', kind:'phon',
+  lines:[
+    {say:'Disney World is in —', word:'Florida',
+     targets:[{q:'q_11', fn:c=>vowelVerdict(c, 1, {'ɒ':'c','ɑ':'b','ɔ':'d','u':'a','ʊ':'a'}, 'e', 'first vowel')}]},
+    {say:'Give the ending a bit of a —', word:'flourish',
+     targets:[{q:'q_12', fn:c=>vowelVerdict(c, 1, {'ɜ':'a','ɔ':'b','ʌ':'c','ɒ':'b'}, 'd', 'first vowel')}]},
+    {say:'A cure that nobody can explain is a —', word:'miracle',
+     targets:[{q:'q_17', fn:c=>vowelVerdict(c, 1, {'i':'a','ɪ':'b','ɛ':'c'}, 'e', 'first vowel')}]},
+    {say:'Pancakes are better with maple —', word:'syrup',
+     targets:[{q:'q_27', fn:c=>vowelVerdict(c, 1, {'i':'a','ɪ':'b','ɜ':'c','ʌ':'c'}, 'd', 'first vowel')}]},
+    {say:'The pale vegetable that looks like white broccoli is —', word:'cauliflower',
+     targets:[{q:'q_5', fn:c=>vowelVerdict(c, 2, {'i':'a','ɪ':'b'}, 'c', 'second vowel')}]},
+    {say:'Into your pocket goes a neatly folded —', word:'handkerchief',
+     targets:[{q:'q_13', fn:c=>vowelVerdict(c, -1, {'i':'a','ɪ':'b'}, 'c', 'last vowel')}]}
+  ]},
+
+/* --------------------------------------------------------------- 12 */
+{ name:'Names and days', kind:'phon',
+  lines:[
+    {say:'Half man, half horse — a —', word:'centaur',
+     targets:[{q:'q_6', fn:c=>vowelVerdict(c, -1, {'ɑ':'a','ɒ':'b','ɔ':'d'}, 'e', 'last vowel')}]},
+    {say:'The Scottish name spelt C, R, A, I, G is —', word:'Craig',
+     targets:[{q:'q_8', fn:c=>{
+        const fm=H.vowelAt(c,-1);
+        if(!fm) return {opt:'e', ipa:'—', detail:'no clear vowel', conf:0.2};
+        const cls=H.classify(c.cal, fm.f1, fm.f2, ['ɛ','æ','i','ɪ']);
+        const glide=fm.glide>1.2;
+        const opt = glide ? 'b' : (cls.sym==='ɛ' ? 'a' : (cls.sym==='i'||cls.sym==='ɪ' ? 'c' : 'd'));
+        return {opt, ipa: glide?'[eɪ]':`[${cls.sym}]`,
+          detail:`${H.fmt(fm)} → [${cls.sym}]${glide?` · glides (Δ${fm.glide.toFixed(1)}) — a diphthong, "as in say"`:' · steady, no glide'}`, conf:0.5};
+     }}]},
+    {say:'The one who argues your case in court is a —', word:'lawyer',
+     targets:[{q:'q_14', fn:c=>{
+        const fm=H.vowelAt(c,1);
+        if(!fm) return {opt:'d', ipa:'—', detail:'no clear first vowel', conf:0.2};
+        const rise = fm.late.f2 > fm.early.f2+280;
+        return {opt: rise?'a':'b', ipa: rise?'[lɔɪ-]':'[lɔː-]',
+          detail:`F2 ${Math.round(fm.early.f2)} → ${Math.round(fm.late.f2)} Hz — ${rise?'a rising glide, "loyer"':'flat, "law-yer"'}`, conf:0.5};
+     }}]},
+    {say:'The worst day of the week is —', word:'Monday',
+     targets:[{q:'q_19', fn:c=>{
+        const fm=H.vowelAt(c,-1);
+        if(!fm) return {opt:'d', ipa:'—', detail:'no clear final vowel', conf:0.2};
+        const cls=H.classify(c.cal, fm.f1, fm.f2, ['i','ɪ','ɛ','æ']);
+        const opt = cls.sym==='i' ? 'b' : 'a';
+        return {opt, ipa: opt==='b'?'[-diː]':'[-deɪ]', detail:`${H.fmt(fm)} → nearest [${cls.sym}]${fm.glide>1?` · glide Δ${fm.glide.toFixed(1)}`:''}`, conf:cls.conf*0.85};
+     }}]},
+    {say:'Do you actually mean that? —', word:'Really',
+     targets:[{q:'q_23', fn:c=>{
+        const n=H.nsyll(c);
+        if(n>=3) return {opt:'c', ipa:'[iːəli]', detail:'three syllable nuclei — "ree-uh-ly"', conf:0.55};
+        return vowelVerdict(c, 1, {'i':'a','ɪ':'b'}, 'd', 'first vowel');
+     }}]}
+  ]}
+];
+</script>
+
+<script>
+/* =====================================================================
+   PART 5 — the machine that runs it
+   ===================================================================== */
+const $ = id => document.getElementById(id);
+const el = (t,c,txt) => { const e=document.createElement(t); if(c)e.className=c; if(txt!=null)e.textContent=txt; return e; };
+
+const App = {
+  answers:{}, cal:{vowels:{}, sib:{s:6200, sh:3300, vS:0.06, vZ:0.30}, spread:3},
+  ri:0, li:0, mode:'mic', busy:false, lastCtx:null, calDone:false
+};
+
+/* ---------- platform ---------- */
+const IS_IOS = /iP(hone|ad|od)/.test(navigator.userAgent) ||
+               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const IS_STANDALONE = (window.navigator.standalone === true) ||
+               (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+const TAP_TO_START = IS_IOS || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+/* Every iOS browser is WebKit underneath, but speech recognition belongs to
+   Safari, not to WebKit — it is not exposed to Chrome, Firefox, Edge or to any
+   in-app browser, where it either goes missing or errors with service-not-allowed. */
+const UA = navigator.userAgent;
+const IOS_SHELL  = IS_IOS && /CriOS|FxiOS|EdgiOS|OPiOS|OPT\//.test(UA);
+const IOS_INAPP  = IS_IOS && !/Safari\//.test(UA);
+const NOT_SAFARI = IS_IOS && (IOS_SHELL || IOS_INAPP);
+function iosShellName(){
+  if(/CriOS/.test(UA)) return 'Chrome for iOS';
+  if(/FxiOS/.test(UA)) return 'Firefox for iOS';
+  if(/EdgiOS/.test(UA)) return 'Edge for iOS';
+  if(/OPiOS|OPT\//.test(UA)) return 'Opera for iOS';
+  return 'an in-app browser';
+}
+
+/* ---------- audio plumbing ----------
+   iOS will not hand the microphone to getUserMedia and to Siri dictation at
+   the same time, so the stream is opened for pronunciation lines and released
+   again before any speech recognition starts. */
+const Audio = {
+  ctx:null, stream:null, src:null, proc:null, analyser:null, sink:null,
+  chunks:[], recording:false, armed:false, rate:44100, built:false,
+  floor:0.004, sawSpeech:false, quiet:0, frames:0, onDone:null, raf:0,
+
+  ensureContext(){
+    if(this.built) return;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    this.ctx = new AC();
+    this.rate = this.ctx.sampleRate;
+    this.analyser = this.ctx.createAnalyser();
+    this.analyser.fftSize = 2048;
+    this.analyser.smoothingTimeConstant = 0.35;
+    this.proc = this.ctx.createScriptProcessor(2048, 1, 1);
+    this.sink = this.ctx.createGain(); this.sink.gain.value = 0;
+    this.proc.connect(this.sink);
+    this.sink.connect(this.ctx.destination);
+    this.proc.onaudioprocess = e => this.tick(e.inputBuffer.getChannelData(0));
+    this.built = true;
+    this.drawLoop();
+  },
+  live(){
+    return !!(this.stream && this.stream.getAudioTracks().length &&
+              this.stream.getAudioTracks()[0].readyState === 'live');
+  },
+  async open(){
+    this.ensureContext();
+    if(this.ctx.state === 'suspended') await this.ctx.resume();
+    if(this.live()) return true;
+    this.stream = await navigator.mediaDevices.getUserMedia({audio:{
+      echoCancellation:false, noiseSuppression:false, autoGainControl:false, channelCount:1}});
+    this.rate = this.ctx.sampleRate;
+    this.src = this.ctx.createMediaStreamSource(this.stream);
+    this.src.connect(this.analyser);
+    this.src.connect(this.proc);
+    return true;
+  },
+  release(){
+    this.recording=false; this.armed=false; this.onDone=null;
+    if(this.src){ try{ this.src.disconnect(); }catch(e){} this.src=null; }
+    if(this.stream){ this.stream.getTracks().forEach(t=>{ try{ t.stop(); }catch(e){} }); this.stream=null; }
+  },
+  arm(onDone){
+    this.chunks=[]; this.sawSpeech=false; this.quiet=0; this.frames=0; this.floor=0.004;
+    this.armed=true; this.recording=true; this.onDone=onDone;
+  },
+  tick(input){
+    if(!this.recording) return;
+    const buf = new Float32Array(input);
+    this.chunks.push(buf);
+    let s=0; for(let i=0;i<buf.length;i++) s+=buf[i]*buf[i];
+    const rms=Math.sqrt(s/buf.length);
+    this.frames++;
+    const frameMs = 2048/this.rate*1000;
+    if(this.frames<=6 && !this.sawSpeech) this.floor = Math.max(0.0018, this.floor*0.6 + rms*0.4);
+    const thr = Math.max(this.floor*3.2, 0.011);
+    if(rms>thr){ this.sawSpeech=true; this.quiet=0; }
+    else if(this.sawSpeech){ this.quiet += frameMs; }
+    const totalMs = this.frames*frameMs;
+    if((this.sawSpeech && this.quiet>820) || totalMs>16000) this.stop();
+    UI.level(rms, thr);
+  },
+  cancel(){
+    this.recording=false; this.armed=false; this.onDone=null; this.chunks=[];
+  },
+  stop(){
+    if(!this.recording) return;
+    this.recording=false; this.armed=false;
+    let n=0; for(const c of this.chunks) n+=c.length;
+    const out=new Float32Array(n); let o=0;
+    for(const c of this.chunks){ out.set(c,o); o+=c.length; }
+    const cb=this.onDone; this.onDone=null;
+    if(cb) cb(out, this.rate, this.sawSpeech);
+  },
+  drawLoop(){
+    const cv=$('scope'), g=cv.getContext('2d');
+    const bins=this.analyser.frequencyBinCount;
+    const data=new Uint8Array(bins);
+    const hex2rgb=h=>{ h=h.replace('#','');
+      if(h.length===3) h=h.split('').map(c=>c+c).join('');
+      const n=parseInt(h,16);
+      return [ (n>>16)&255, (n>>8)&255, n&255 ]; };
+    let colBg='#dfe4e8', colTr=[91,107,125], colLive=[171,32,73];
+    const readColors=()=>{ const st=getComputedStyle(document.documentElement);
+      colBg=st.getPropertyValue('--surface-2').trim()||colBg;
+      try{ colTr=hex2rgb(st.getPropertyValue('--trace').trim()); }catch(e){}
+      try{ colLive=hex2rgb(st.getPropertyValue('--live').trim()); }catch(e){} };
+    readColors();
+    setInterval(readColors, 1500);
+    g.fillStyle=colBg; g.fillRect(0,0,cv.width,cv.height);
+    const step=3;
+    const frame=()=>{
+      const top=Math.min(bins, Math.floor(5000/(this.rate/2)*bins));
+      this.analyser.getByteFrequencyData(data);
+      const img=g.getImageData(step,0,cv.width-step,cv.height);
+      g.putImageData(img,0,0);
+      g.fillStyle=colBg; g.fillRect(cv.width-step,0,step,cv.height);
+      const hot = this.recording && this.sawSpeech;
+      for(let y=0;y<cv.height;y++){
+        const b=Math.floor((1-y/cv.height)*top);
+        const v=data[b]/255;
+        if(v<0.06) continue;
+        const c = hot ? colLive : colTr;
+        g.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${(hot?v:v*0.72).toFixed(3)})`;
+        g.fillRect(cv.width-step, y, step, 1);
+      }
+      this.raf=requestAnimationFrame(frame);
+    };
+    frame();
+  }
+};
+
+/* ---------- speech recognition (words, not phonetics) ---------- */
+const ASR = {
+  rec:null, text:'', ok:false, dead:null, onFinish:null, timer:0,
+  init(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR) return false;
+    this.rec = new SR();
+    this.rec.lang='en-GB'; this.rec.continuous=false; this.rec.interimResults=true; this.rec.maxAlternatives=3;
+    this.rec.onresult = e => {
+      let t='';
+      for(let i=0;i<e.results.length;i++){
+        for(let a=0;a<e.results[i].length;a++) t += ' ' + e.results[i][a].transcript;
+      }
+      this.text = t.toLowerCase();
+    };
+    this.rec.onend = () => this.settle();
+    this.rec.onerror = e => {
+      const err = e && e.error;
+      if(err==='service-not-allowed' || err==='not-allowed' || err==='audio-capture'){
+        this.ok=false;
+        this.dead = err==='service-not-allowed'
+          ? 'this browser has no speech recognition service — Safari keeps it to itself'
+          : 'the microphone was refused for speech recognition';
+        if(typeof onASRLost==='function') onASRLost();
+      }
+      this.settle();
+    };
+    this.ok = true;
+    return true;
+  },
+  listen(cb){
+    this.text=''; this.onFinish=cb;
+    if(!this.ok){ setTimeout(()=>this.settle(), 60); return; }
+    try{ this.rec.start(); }
+    catch(e){
+      try{ this.rec.abort(); this.rec.start(); }
+      catch(e2){ setTimeout(()=>this.settle(), 60); return; }
+    }
+    clearTimeout(this.timer);
+    this.timer=setTimeout(()=>{ try{ this.rec.stop(); }catch(e){} setTimeout(()=>this.settle(), 500); }, 14000);
+  },
+  stopNow(){ if(this.ok){ try{ this.rec.stop(); }catch(e){ this.settle(); } } else this.settle(); },
+  settle(){
+    clearTimeout(this.timer);
+    const f=this.onFinish; this.onFinish=null;
+    if(f) f(this.text);
+  },
+  abort(){
+    clearTimeout(this.timer); this.onFinish=null;
+    if(this.ok){ try{ this.rec.abort(); }catch(e){} }
+  }
+};
+
+/* ---------- speaking the verdict back ---------- */
+function speak(text, then){
+  if(!window.speechSynthesis){ if(then) setTimeout(then,300); return; }
+  try{
+    window.speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.rate=1.04; u.pitch=1; u.lang='en-GB';
+    u.onend=()=>{ if(then) then(); };
+    u.onerror=()=>{ if(then) then(); };
+    window.speechSynthesis.speak(u);
+    setTimeout(()=>{ if(then && !window.speechSynthesis.speaking) then(); }, 4200);
+  }catch(e){ if(then) then(); }
+}
+</script>
+
+<script>
+/* =====================================================================
+   PART 6 — analysis dispatch, interface, submission
+   ===================================================================== */
+
+const CAL_WORDS = {i:'bee', 'ɪ':'bit', 'ɛ':'bet', 'æ':'bat', 'ɑ':'bar', 'ɒ':'cot',
+                  'ɔ':'caught', 'ʌ':'but', 'ʊ':'book', u:'boot', 'ɜ':'bird'};
+
+function vdist(a,b){ return Math.hypot(bark(a.f1)-bark(b.f1), (bark(a.f2)-bark(b.f2))*0.85); }
+function calSpread(){
+  const v=Object.values(App.cal.vowels), d=[];
+  for(let i=0;i<v.length;i++) for(let j=i+1;j<v.length;j++) d.push(vdist(v[i],v[j]));
+  d.sort((a,b)=>a-b);
+  return d.length ? d[d.length>>1] : 3;
+}
+function sameVowel(a,b){
+  const d=vdist(a,b), thr=Math.max(0.75, 0.30*App.cal.spread);
+  return {same:d<thr, d, thr, conf:Math.min(1,0.35+Math.abs(d-thr)/thr*0.6)};
+}
+function makeCtx(buf, rate, region){
+  return {buf, rate, region, nuclei:DSP.syllableNuclei(buf,rate,region), cal:App.cal};
+}
+function pickRegions(regs, buf, want){
+  if(regs.length===want) return regs;
+  if(regs.length>want){
+    const scored=regs.map(r=>({r, e:DSP.totalEnergy(buf,r.s,r.e)}))
+                     .sort((a,b)=>b.e-a.e).slice(0,want)
+                     .sort((a,b)=>a.r.s-b.r.s);
+    return scored.map(x=>x.r);
+  }
+  return null;
+}
+
+/* ---------- turn one recording into verdicts ---------- */
+function analyseLine(line, buf, rate, transcript){
+  const out=[];
+
+  /* --- word-choice: read it off the transcript --- */
+  if(line.q){
+    const t=' '+transcript.replace(/[^a-z' ]/g,' ').replace(/\s+/g,' ')+' ';
+    let opt=null, hit=null;
+    for(const [re,id] of line.match){ if(re.test(t)){ opt=id; hit=(t.match(re)||[''])[0].trim(); break; } }
+    const fell = !opt;
+    if(fell) opt=line.dflt;
+    out.push({q:line.q, opt,
+      ipa: hit ? `“${hit}”` : (transcript.trim()? '“'+transcript.trim().split(' ').slice(-4).join(' ')+'”' : '—'),
+      detail: fell
+        ? 'not one of the American options on this question — filed under the catch-all'
+        : `matched on “${hit}”`,
+      conf: fell ? 0.5 : 0.85,
+      heard: transcript.trim()});
+    return out;
+  }
+
+  const regs=DSP.segmentRegions(buf, rate);
+  if(!regs.length) return null;
+
+  /* --- calibration: a word per reference vowel --- */
+  if(line.cal){
+    const picked=pickRegions(regs, buf, line.cal.length);
+    if(!picked) return {error:`I heard ${regs.length} chunk${regs.length===1?'':'s'}, not ${line.cal.length}. Leave a clear gap between the words.`};
+    const got=[];
+    picked.forEach((r,i)=>{
+      const fm=DSP.vowelFormants(buf, rate, r.s, r.e);
+      if(fm){ App.cal.vowels[line.cal[i]]={f1:fm.f1, f2:fm.f2}; got.push(`${CAL_WORDS[line.cal[i]]} [${line.cal[i]}] ${Math.round(fm.f1)}/${Math.round(fm.f2)} Hz`); }
+    });
+    App.cal.spread=calSpread();
+    out.push({cal:true, ipa:got.length+' vowels logged', detail:got.join('  ·  '), conf:1});
+  }
+
+  /* --- calibration: sibilant references --- */
+  if(line.calSib){
+    const picked=pickRegions(regs, buf, 3);
+    if(!picked) return {error:`I heard ${regs.length} chunks, not 3. Say sock, shock, zoo with a gap between each.`};
+    const f=picked.map(r=>DSP.fricationStats(buf, rate, r.s, r.e));
+    if(f[0]) { App.cal.sib.s=f[0].cog; App.cal.sib.vS=f[0].voicing; }
+    if(f[1]) App.cal.sib.sh=f[1].cog;
+    if(f[2]) App.cal.sib.vZ=f[2].voicing;
+    out.push({cal:true, ipa:'sibilants logged',
+      detail:`your [s] ${Math.round(App.cal.sib.s)} Hz · your [ʃ] ${Math.round(App.cal.sib.sh)} Hz · voicing [s] ${App.cal.sib.vS.toFixed(3)} vs [z] ${App.cal.sib.vZ.toFixed(3)}`, conf:1});
+  }
+
+  /* --- the targets on this line --- */
+  for(const tg of (line.targets||[])){
+
+    if(tg.kind==='merger-cal'){
+      const A=App.cal.vowels['ɒ'], B=App.cal.vowels['ɔ'];
+      if(!A||!B){ out.push({q:tg.q, opt:'a', ipa:'—', detail:'could not measure both vowels', conf:0.2}); continue; }
+      const r=sameVowel(A,B);
+      out.push({q:tg.q, opt:r.same?'b':'a', ipa:r.same?'[kɒt] = [kɒt]':'[kɒt] ≠ [kɔːt]',
+        detail:`cot ${Math.round(A.f1)}/${Math.round(A.f2)} Hz vs caught ${Math.round(B.f1)}/${Math.round(B.f2)} Hz — ${r.d.toFixed(2)} Bark apart, and ${r.thr.toFixed(2)} is your own threshold for "different"`,
+        conf:r.conf});
+      continue;
+    }
+
+    if(tg.kind==='merger3'){
+      const picked=pickRegions(regs, buf, 3);
+      if(!picked){ out.push({q:tg.q, opt:'b', ipa:'—', detail:`heard ${regs.length} chunks, not 3`, conf:0.2}); continue; }
+      const v=picked.map(r=>DSP.vowelFormants(buf,rate,r.s,r.e)).map(f=>f&&{f1:f.f1,f2:f.f2});
+      if(v.some(x=>!x)){ out.push({q:tg.q, opt:'b', ipa:'—', detail:'a vowel would not measure', conf:0.2}); continue; }
+      const MM=sameVowel(v[0],v[1]), MRy=sameVowel(v[1],v[2]), MyMy=sameVowel(v[0],v[2]);
+      let opt;
+      if(MM.same && MRy.same) opt='a';
+      else if(MM.same) opt='c';
+      else if(MRy.same) opt='d';
+      else if(MyMy.same) opt='e';
+      else opt='b';
+      out.push({q:tg.q, opt, ipa:`${MM.same?'=':'≠'} ${MRy.same?'=':'≠'}`,
+        detail:`Mary ${Math.round(v[0].f1)}/${Math.round(v[0].f2)} · merry ${Math.round(v[1].f1)}/${Math.round(v[1].f2)} · marry ${Math.round(v[2].f1)}/${Math.round(v[2].f2)} Hz — gaps of ${MM.d.toFixed(2)} and ${MRy.d.toFixed(2)} Bark against a ${MM.thr.toFixed(2)} threshold`,
+        conf:Math.min(MM.conf,MRy.conf)});
+      continue;
+    }
+
+    if(tg.kind==='four-vowels'){
+      const picked=pickRegions(regs, buf, 4);
+      if(!picked){ out.push({q:tg.q, opt:'c', ipa:'—', detail:`heard ${regs.length} chunks, not 4`, conf:0.2}); continue; }
+      const names=['roof','room','broom','root'];
+      const syms=[], bits=[];
+      picked.forEach((r,i)=>{
+        const fm=DSP.vowelFormants(buf,rate,r.s,r.e);
+        if(!fm){ syms.push('?'); bits.push(names[i]+' —'); return; }
+        const c=H.classify(App.cal, fm.f1, fm.f2, ['u','ʊ','ʌ','ɜ','ɔ']);
+        syms.push(c.sym); bits.push(`${names[i]} [${c.sym}] ${Math.round(fm.f1)}/${Math.round(fm.f2)}`);
+      });
+      const uniq=[...new Set(syms)];
+      const opt = uniq.length>1 ? 'c' : (syms[0]==='u' ? 'a' : (syms[0]==='ʊ' ? 'b' : 'c'));
+      out.push({q:tg.q, opt, ipa:syms.map(s=>'['+s+']').join(' '), detail:bits.join('  ·  '),
+        conf: uniq.length>1?0.6:0.65});
+      continue;
+    }
+
+    /* ordinary single-word target: measure the final chunk */
+    const region=regs[regs.length-1];
+    const ctx=makeCtx(buf, rate, region);
+    App.lastCtx=ctx;
+    let v=null;
+    try{ v=tg.fn(ctx); }catch(err){ v=null; }
+    if(!v) v={opt:null, ipa:'—', detail:'the measurement did not come out — pick one below', conf:0.1};
+    v.q=tg.q;
+    v.detail = `“${line.word}” · ${(region.e-region.s)/rate*1000|0} ms · ${v.detail}`;
+    out.push(v);
+  }
+  return out;
+}
+
+/* =============================== UI =============================== */
+const UI = {
+  level(rms, thr){
+    const db = rms>0 ? (20*Math.log10(rms)).toFixed(0) : '-inf';
+    $('scopeLvl').textContent = `${db} dB${rms>thr?' ●':''}`;
+  },
+  round(){
+    const r=ROUNDS[App.ri];
+    $('roundName').textContent = r.name;
+    $('roundCount').textContent = `round ${App.ri+1} of ${ROUNDS.length}`;
+    const p=$('passage'); p.innerHTML='';
+    r.lines.forEach((ln,i)=>{
+      const d=el('div','line'+(i<App.li?' done':'')+(i===App.li?' active':''));
+      if(ln.q){
+        d.append(document.createTextNode(ln.pre+' '));
+        d.append(el('span','slot','▁▁▁▁'));
+        d.append(document.createTextNode(' '+(ln.post||'')));
+      } else {
+        d.append(document.createTextNode(ln.say+' '));
+        if(ln.word) d.append(el('span','tgt',ln.word));
+      }
+      if(i===App.li){
+        const hint = ln.hint || (ln.q ? 'Read the line and say your own word in the gap.'
+                                      : 'Pause at the dash, then say the last word.');
+        d.append(el('span','hint',hint));
+      }
+      p.append(d);
+    });
+    if(!$('gamePanel').classList.contains('hide')){
+      const act=p.querySelector('.line.active');
+      if(act) requestAnimationFrame(()=>act.scrollIntoView({block:'center', behavior:'smooth'}));
+    }
+  },
+  status(t){ $('status').textContent=t; },
+  clearVerdicts(){ $('verdicts').innerHTML=''; },
+
+  verdict(v, onPick){
+    const card=el('div','verdict');
+    const left=el('div');
+    if(v.cal){
+      left.append(el('p','q','Calibration'));
+    } else {
+      left.append(el('p','q', Q[v.q] ? Q[v.q].t : ''));
+    }
+    if(!v.tap){
+      left.append(el('div','ipa', v.ipa));
+      left.append(el('div','measure', v.detail));
+    }
+    if(v.heard) { const h=el('div','heard'); h.append(document.createTextNode('heard: ')); const em=el('em',null,v.heard); h.append(em); left.append(h); }
+
+    if(!v.cal){
+      const picked=el('div','picked');
+      const lab = v.opt ? (Q[v.q].o.find(o=>o[0]===v.opt)||['','?'])[1] : 'nothing chosen yet';
+      picked.append(el('b',null,lab));
+      left.append(picked);
+      const opts=el('div','opts');
+      Q[v.q].o.forEach(([id,label])=>{
+        const b=el('button','opt'+(id===v.opt?' sel':''), label);
+        b.type='button';
+        b.addEventListener('click',()=>{
+          v.opt=id; App.answers[v.q]=id;
+          opts.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel'));
+          b.classList.add('sel');
+          picked.innerHTML=''; picked.append(el('b',null,label));
+          UI.sheet();
+          if(onPick) onPick(id);
+        });
+        opts.append(b);
+      });
+      left.append(opts);
+    }
+    card.append(left);
+    const right=el('div');
+    if(!v.cal && !v.tap) right.append(el('span','conf '+(v.conf>=0.55?'hi':'lo'),
+      v.conf>=0.75?'confident':(v.conf>=0.55?'fairly sure':'check this')));
+    card.append(right);
+    $('verdicts').append(card);
+    return card;
+  },
+
+  tape(){
+    const t=$('tape'); t.innerHTML='';
+    QORDER.forEach(qid=>{
+      const c=el('span','cell'+(App.answers[qid]?' done':''));
+      c.title=Q[qid].t;
+      t.append(c);
+    });
+    const n=Object.keys(App.answers).length;
+    $('tapeNote').textContent=`${n} of 60`;
+  },
+  sheet(){
+    const ol=$('sheetList'); ol.innerHTML='';
+    QORDER.forEach((qid,i)=>{
+      const li=el('li');
+      li.append(el('span','n', String(i+1).padStart(2,'0')));
+      li.append(el('span','qt', Q[qid].t));
+      const a=App.answers[qid];
+      li.append(el('span','av', a ? (Q[qid].o.find(o=>o[0]===a)||['','?'])[1] : '—'));
+      ol.append(li);
+    });
+    UI.tape();
+  },
+  vowelMap(){
+    const V=App.cal.vowels, keys=Object.keys(V);
+    if(keys.length<4) return;
+    $('vowelPanel').classList.remove('hide');
+    const svg=$('vowelSvg'); svg.innerHTML='';
+    const NS='http://www.w3.org/2000/svg';
+    const f1s=keys.map(k=>V[k].f1), f2s=keys.map(k=>V[k].f2);
+    const pad=52, W=560, Hh=340;
+    const x1=Math.max(...f2s)*1.06, x0=Math.min(...f2s)*0.94;
+    const y0=Math.min(...f1s)*0.92, y1=Math.max(...f1s)*1.08;
+    const X=f2=>pad+(x1-f2)/(x1-x0)*(W-pad*1.4);
+    const Y=f1=>pad*0.7+(f1-y0)/(y1-y0)*(Hh-pad*1.9);
+    const mk=(n,at)=>{const e=document.createElementNS(NS,n); for(const k in at) e.setAttribute(k,at[k]); return e;};
+    const line=(a,b,c,d)=>svg.append(mk('line',{x1:a,y1:b,x2:c,y2:d,stroke:'currentColor','stroke-opacity':.2,'stroke-width':1}));
+    svg.setAttribute('color','currentColor');
+    line(pad*0.75,pad*0.5,pad*0.75,Hh-pad*0.9); line(pad*0.75,Hh-pad*0.9,W-pad*0.3,Hh-pad*0.9);
+    const t1=mk('text',{x:pad*0.75,y:pad*0.28,'font-size':11,fill:'currentColor','fill-opacity':.6,'font-family':'Noto Sans Mono, monospace'});
+    t1.textContent='F2 high (front) →  left'; svg.append(t1);
+    const t2=mk('text',{x:pad*0.75,y:Hh-pad*0.35,'font-size':11,fill:'currentColor','fill-opacity':.6,'font-family':'Noto Sans Mono, monospace'});
+    t2.textContent='F1 low (close) at the top · Hz measured from your own voice'; svg.append(t2);
+    keys.forEach(k=>{
+      const v=V[k], cx=X(v.f2), cy=Y(v.f1);
+      svg.append(mk('circle',{cx,cy,r:4,fill:'currentColor','fill-opacity':.55}));
+      const tx=mk('text',{x:cx+8,y:cy+5,'font-size':15,fill:'currentColor','font-family':'Noto Sans Mono, monospace'});
+      tx.textContent=k; svg.append(tx);
+      const tw=mk('text',{x:cx+8,y:cy+19,'font-size':10,fill:'currentColor','fill-opacity':.5,'font-family':'Noto Sans Mono, monospace'});
+      tw.textContent=CAL_WORDS[k]||''; svg.append(tw);
+    });
+  }
+};
+</script>
+
+<script>
+/* =====================================================================
+   PART 7 — flow, submission, boot
+   ===================================================================== */
+
+let waiting=false, phase='idle';
+
+function line(){ return ROUNDS[App.ri].lines[App.li]; }
+function isWordLine(){ return !!line().q; }
+
+function setMic(label, rec){
+  const b=$('recBtn');
+  b.classList.toggle('rec', rec);
+  b.innerHTML='<span class="dot"></span>'+label;
+}
+
+/* show the line and wait for a tap — iOS will only open the mic from a gesture */
+function readyLine(){
+  waiting=false; phase='ready';
+  UI.round();
+  setMic('Speak the line', false);
+  UI.status(TAP_TO_START ? 'tap “Speak the line” when you are ready' : 'starting…');
+  if(!TAP_TO_START) beginCapture();
+}
+
+async function beginCapture(){
+  if(phase==='capturing') return;
+  phase='capturing';
+  const ln=line();
+  try{
+    if(isWordLine()) await captureWords(ln);
+    else await captureAudio(ln);
+  }catch(e){
+    phase='ready';
+    setMic('Speak the line', false);
+    UI.status('the microphone would not start — '+(e && e.message ? e.message : e));
+  }
+}
+
+/* word-choice lines: speech recognition only, never alongside a recording */
+async function captureWords(ln){
+  if(!ASR.ok){
+    /* no recognition available — read the line aloud for your own satisfaction,
+       then tap the word you used */
+    phase='done';
+    setMic('Speak the line', false);
+    UI.status(ASR.dead ? ASR.dead + ' — tap the word you used' : 'tap the word you used');
+    settleLine(analyseLine(ln, null, 0, ''));
+    return;
+  }
+  if(IS_IOS) Audio.release();
+  else { try{ await Audio.open(); }catch(e){} }
+  setMic('Listening — say the line', true);
+  UI.status('say the line with your own word in the gap');
+  $('scopeTag').textContent = (IS_IOS ? 'listening for words' : 'spectrogram · 0–5 kHz');
+  ASR.listen(txt=>{
+    if(phase!=='capturing') return;
+    phase='done';
+    setMic('Speak the line', false);
+    UI.status('reading it back…');
+    let res=null;
+    try{ res=analyseLine(ln, null, 0, txt||''); }catch(e){ console.error(e); }
+    settleLine(res);
+  });
+}
+
+/* pronunciation lines: the audio itself, with recognition shut down */
+async function captureAudio(ln){
+  ASR.abort();
+  await Audio.open();
+  setMic('Listening — go ahead', true);
+  UI.status('pause at the dash, then say the last word');
+  $('scopeTag').textContent='spectrogram · 0–5 kHz';
+  Audio.arm((buf, rate, saw)=>{
+    if(phase!=='capturing') return;
+    phase='done';
+    setMic('Speak the line', false);
+    if(!saw){ phase='ready'; UI.clearVerdicts(); UI.status('I did not hear anything — tap and try again'); return; }
+    UI.status('measuring…');
+    setTimeout(()=>{
+      let res=null;
+      try{ res=analyseLine(ln, buf, rate, ''); }catch(e){ console.error(e); }
+      settleLine(res);
+    }, 30);
+  });
+}
+
+function onASRLost(){
+  if(phase==='capturing' && isWordLine()){
+    UI.status(ASR.dead + ' — tap the word you used');
+  }
+}
+
+function settleLine(res){
+  if(res && res.error){ phase='ready'; UI.clearVerdicts(); UI.status(res.error); return; }
+  if(!res || !res.length){ phase='ready'; UI.clearVerdicts(); UI.status('nothing measurable there — tap and try once more'); return; }
+  showVerdicts(res);
+}
+
+function showVerdicts(list){
+  UI.clearVerdicts();
+  let minConf=1;
+  list.forEach(v=>{
+    if(v.q && v.opt) App.answers[v.q]=v.opt;
+    if(!v.cal) minConf=Math.min(minConf, v.conf);
+    UI.verdict(v, ()=>{ waiting=true; UI.status('answer changed — tap “Next line” when ready'); });
+  });
+  UI.sheet();
+  if(ROUNDS[App.ri].kind==='cal' && Object.keys(App.cal.vowels).length>=8) UI.vowelMap();
+
+  const phrases=list.filter(v=>!v.cal).map(v=>{
+    const lab=v.opt?(Q[v.q].o.find(o=>o[0]===v.opt)||['',''])[1]:'nothing';
+    return v.heard!==undefined ? `Filed as ${lab}` : `${v.ipa.replace(/[\[\]]/g,' ')}. ${lab}`;
+  });
+  const said = phrases.length ? phrases.join('. ') : 'Calibration logged.';
+
+  const confident = minConf>=0.55;
+  UI.status(confident ? 'that one is settled' : 'not certain — check the chips below');
+  addNextButton(confident);
+  speak(said.slice(0,220), ()=>{
+    if(confident && !waiting) setTimeout(()=>{ if(!waiting) advance(); }, 700);
+  });
+}
+
+function addNextButton(confident){
+  const wrap=el('div','controls');
+  const b=el('button','btn'+(confident?'':' solid'), confident?'Next line':'Looks right — next line');
+  b.type='button';
+  b.addEventListener('click', advance);
+  wrap.append(b);
+  const again=el('button','btn','Say that line again');
+  again.type='button';
+  again.addEventListener('click', ()=>{ Audio.cancel(); ASR.abort(); UI.clearVerdicts(); phase='ready'; beginCapture(); });
+  wrap.append(again);
+  $('verdicts').append(wrap);
+}
+
+function advance(){
+  waiting=false;
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  Audio.cancel();
+  UI.clearVerdicts();
+  ASR.abort();
+  phase='idle';
+  App.li++;
+  if(App.li >= ROUNDS[App.ri].lines.length){
+    App.ri++; App.li=0;
+    if(App.ri >= ROUNDS.length){ finishGame(); return; }
+  }
+  readyLine();
+}
+
+function finishGame(){
+  $('gamePanel').classList.add('hide');
+  UI.sheet();
+  $('subStatus').textContent = `${Object.keys(App.answers).length} of 60 answered — ready to submit`;
+  $('tapePanel').scrollIntoView && null;
+  $('tapePanel').scrollIntoView({behavior:'smooth', block:'start'});
+  speak('That is all sixty. Submit them and see where you land.');
+}
+
+/* ---------- submission ---------- */
+function stateUrl(){
+  const payload={answers:App.answers, active_qids:QORDER};
+  return 'https://mydialect.us/quiz-standard.html?state=' + encodeURIComponent(btoa(JSON.stringify(payload)));
+}
+$('submitBtn').addEventListener('click', ()=>{
+  const n=Object.keys(App.answers).length;
+  if(!n){ $('subStatus').textContent='nothing to submit yet'; return; }
+  const url=stateUrl();
+  const w=window.open(url,'_blank','noopener');
+  $('subStatus').textContent = w ? `sent ${n} answers` : 'the browser blocked the pop-up — use the link below';
+  if(!w){ $('linkOut').textContent=url; $('linkOut').classList.remove('hide'); }
+});
+$('copyBtn').addEventListener('click', async ()=>{
+  const url=stateUrl();
+  try{ await navigator.clipboard.writeText(url); $('subStatus').textContent='link copied'; }
+  catch(e){ $('linkOut').textContent=url; $('linkOut').classList.remove('hide'); $('subStatus').textContent='copy it from below'; }
+});
+
+/* ---------- controls ---------- */
+$('recBtn').addEventListener('click', ()=>{
+  if(phase==='capturing'){
+    if(isWordLine()) ASR.stopNow(); else Audio.stop();
+    return;
+  }
+  UI.clearVerdicts();
+  beginCapture();
+});
+$('againBtn').addEventListener('click', ()=>{
+  Audio.cancel(); ASR.abort(); UI.clearVerdicts(); phase='ready'; beginCapture();
+});
+$('skipBtn').addEventListener('click', ()=>{ Audio.cancel(); ASR.abort(); phase='idle'; advance(); });
+
+$('themeBtn').addEventListener('click', ()=>{
+  const r=document.documentElement;
+  const now=r.getAttribute('data-theme');
+  const sysDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const next = now ? (now==='dark'?'light':'dark') : (sysDark?'light':'dark');
+  r.setAttribute('data-theme', next);
+});
+
+/* ---------- tap-only fallback ---------- */
+$('silentBtn').addEventListener('click', ()=>{
+  App.mode='tap';
+  $('introPanel').classList.add('hide');
+  $('gamePanel').classList.remove('hide');
+  $('roundName').textContent='Tap your answers';
+  $('roundCount').textContent='no microphone';
+  $('passage').innerHTML='';
+  document.querySelector('.scope-wrap').classList.add('hide');
+  document.querySelector('#gamePanel .controls').classList.add('hide');
+  UI.clearVerdicts();
+  $('passage').classList.add('hide');
+  QORDER.forEach(qid=>UI.verdict({q:qid, opt:null, tap:true, ipa:'', detail:'', conf:1}));
+  UI.sheet();
+});
+
+/* ---------- start ---------- */
+$('startBtn').addEventListener('click', async ()=>{
+  $('startBtn').disabled=true;
+  $('startBtn').innerHTML='<span class="dot"></span>starting…';
+  try{
+    ASR.init();
+    await Audio.open();
+  }catch(e){
+    $('capWarn').classList.add('show');
+    $('capWarn').textContent='The microphone would not open here: '+(e && e.message ? e.message : e)+
+      '. If this page is embedded, open it in its own tab — or use the tap-only mode below.';
+    $('startBtn').disabled=false;
+    $('startBtn').innerHTML='<span class="dot"></span>Try the microphone again';
+    return;
+  }
+  if(!ASR.ok){
+    $('capWarn').classList.add('show');
+    $('capWarn').textContent='No speech recognition in this browser, so the word-choice questions will need a tap. The pronunciation measurements still work — they come from the audio itself.';
+  }
+  $('introPanel').classList.add('hide');
+  $('gamePanel').classList.remove('hide');
+  UI.sheet();
+  UI.round();
+  speak('Calibration first. Say each word on its own, with a beat between them.', readyLine);
+});
+
+/* capability check at rest */
+(function boot(){
+  UI.sheet();
+  if(IS_IOS && IS_STANDALONE){
+    $('capWarn').classList.add('show');
+    $('capWarn').textContent='Launched from the Home Screen, iOS reports speech recognition as available but never returns a word. Open this page in Safari itself and it works.';
+    return;
+  }
+  if(NOT_SAFARI){
+    $('capWarn').classList.add('show');
+    $('capWarn').textContent='This is '+iosShellName()+'. On iOS that is WebKit in a different wrapper, and speech recognition stays with Safari — so the 36 pronunciation questions will work here, and the 24 word questions will want a tap. Open the page in Safari to say all 60.';
+    return;
+  }
+  const noMic = !(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+  const noASR = !(window.SpeechRecognition || window.webkitSpeechRecognition);
+  if(noMic){
+    $('capWarn').classList.add('show');
+    $('capWarn').textContent='This browser exposes no microphone to the page. Tap-only mode below still gets you a map.';
+  } else if(noASR){
+    $('capWarn').classList.add('show');
+    $('capWarn').textContent='No speech recognition in this browser — Chrome has it. The pronunciation half works anywhere; the word-choice half will want a tap.';
+  }
+})();
+</script>
+
+</body>
+</html>
