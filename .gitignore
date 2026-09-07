@@ -2,3 +2,8 @@
 node_modules/
 .deploy.log
 .wrangler/
+.build.log
+.shots/
+ios/SayIt.xcodeproj/
+ios/build/
+DerivedData/

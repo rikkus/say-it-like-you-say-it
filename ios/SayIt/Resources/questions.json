@@ -1,0 +1,1730 @@
+[
+ {
+  "id": "q_105",
+  "text": "What is your generic term for a sweetened carbonated beverage?",
+  "options": [
+   {
+    "id": "a",
+    "label": "soda"
+   },
+   {
+    "id": "b",
+    "label": "pop"
+   },
+   {
+    "id": "c",
+    "label": "coke"
+   },
+   {
+    "id": "d",
+    "label": "tonic"
+   },
+   {
+    "id": "e",
+    "label": "soft drink"
+   },
+   {
+    "id": "f",
+    "label": "lemonade"
+   },
+   {
+    "id": "g",
+    "label": "cocola"
+   },
+   {
+    "id": "h",
+    "label": "fizzy drink"
+   },
+   {
+    "id": "i",
+    "label": "dope"
+   },
+   {
+    "id": "j",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_50",
+  "text": "What word(s) do you use to address a group of two or more people?",
+  "options": [
+   {
+    "id": "a",
+    "label": "you all"
+   },
+   {
+    "id": "b",
+    "label": "yous, youse"
+   },
+   {
+    "id": "c",
+    "label": "you lot"
+   },
+   {
+    "id": "d",
+    "label": "you guys"
+   },
+   {
+    "id": "e",
+    "label": "you 'uns"
+   },
+   {
+    "id": "f",
+    "label": "yins"
+   },
+   {
+    "id": "g",
+    "label": "you"
+   },
+   {
+    "id": "h",
+    "label": "other"
+   },
+   {
+    "id": "i",
+    "label": "y'all"
+   }
+  ]
+ },
+ {
+  "id": "q_73",
+  "text": "What is your *general* term for the rubber-soled shoes worn in gym class, for athletic activities, etc.?",
+  "options": [
+   {
+    "id": "a",
+    "label": "sneakers"
+   },
+   {
+    "id": "b",
+    "label": "shoes"
+   },
+   {
+    "id": "c",
+    "label": "gymshoes"
+   },
+   {
+    "id": "d",
+    "label": "sand shoes"
+   },
+   {
+    "id": "e",
+    "label": "jumpers"
+   },
+   {
+    "id": "f",
+    "label": "tennis shoes"
+   },
+   {
+    "id": "g",
+    "label": "running shoes"
+   },
+   {
+    "id": "h",
+    "label": "runners"
+   },
+   {
+    "id": "i",
+    "label": "trainers"
+   },
+   {
+    "id": "j",
+    "label": "I have no general word for this"
+   },
+   {
+    "id": "k",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_64",
+  "text": "What do you call the long sandwich that contains cold cuts, lettuce, and so on?",
+  "options": [
+   {
+    "id": "a",
+    "label": "sub"
+   },
+   {
+    "id": "b",
+    "label": "grinder"
+   },
+   {
+    "id": "c",
+    "label": "hoagie"
+   },
+   {
+    "id": "d",
+    "label": "hero"
+   },
+   {
+    "id": "e",
+    "label": "poor boy"
+   },
+   {
+    "id": "f",
+    "label": "bomber"
+   },
+   {
+    "id": "g",
+    "label": "Italian sandwich"
+   },
+   {
+    "id": "h",
+    "label": "baguette"
+   },
+   {
+    "id": "i",
+    "label": "sarney"
+   },
+   {
+    "id": "j",
+    "label": "I have no word for this"
+   },
+   {
+    "id": "k",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_66",
+  "text": "What do you call the miniature lobster that one finds in lakes and streams for example (a crustacean of the family Astacidae)?",
+  "options": [
+   {
+    "id": "a",
+    "label": "crawfish"
+   },
+   {
+    "id": "b",
+    "label": "crayfish"
+   },
+   {
+    "id": "c",
+    "label": "craw"
+   },
+   {
+    "id": "d",
+    "label": "crowfish"
+   },
+   {
+    "id": "e",
+    "label": "crawdad"
+   },
+   {
+    "id": "f",
+    "label": "mudbug"
+   },
+   {
+    "id": "g",
+    "label": "I have no word for this critter"
+   },
+   {
+    "id": "h",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_74",
+  "text": "What do you call the little gray creature (that looks like an insect but is actually a crustacean) that rolls up into a ball when you touch it?",
+  "options": [
+   {
+    "id": "a",
+    "label": "pill bug"
+   },
+   {
+    "id": "b",
+    "label": "doodle bug"
+   },
+   {
+    "id": "c",
+    "label": "potato bug"
+   },
+   {
+    "id": "d",
+    "label": "roly poly"
+   },
+   {
+    "id": "e",
+    "label": "sow bug"
+   },
+   {
+    "id": "f",
+    "label": "basketball bug"
+   },
+   {
+    "id": "g",
+    "label": "twiddle bug"
+   },
+   {
+    "id": "h",
+    "label": "roll-up bug"
+   },
+   {
+    "id": "i",
+    "label": "wood louse"
+   },
+   {
+    "id": "j",
+    "label": "millipede"
+   },
+   {
+    "id": "k",
+    "label": "centipede"
+   },
+   {
+    "id": "l",
+    "label": "I know what this creature is, but have no word for it"
+   },
+   {
+    "id": "m",
+    "label": "I have no idea what this creature is"
+   },
+   {
+    "id": "n",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_65",
+  "text": "What do you call the insect that flies around in the summer and has a rear section that glows in the dark?",
+  "options": [
+   {
+    "id": "a",
+    "label": "lightning bug"
+   },
+   {
+    "id": "b",
+    "label": "firefly"
+   },
+   {
+    "id": "c",
+    "label": "I use lightning bug and firefly interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "peenie wallie"
+   },
+   {
+    "id": "e",
+    "label": "I have no word for this"
+   },
+   {
+    "id": "f",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_103",
+  "text": "What do you call the thing from which you might drink water in a school?",
+  "options": [
+   {
+    "id": "a",
+    "label": "bubbler"
+   },
+   {
+    "id": "b",
+    "label": "water bubbler"
+   },
+   {
+    "id": "c",
+    "label": "drinking fountain"
+   },
+   {
+    "id": "d",
+    "label": "water fountain"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_28",
+  "text": "Do you pronounce \"cot\" and \"caught\" the same?",
+  "options": [
+   {
+    "id": "a",
+    "label": "different"
+   },
+   {
+    "id": "b",
+    "label": "same"
+   }
+  ]
+ },
+ {
+  "id": "q_15",
+  "text": "How do you pronounce Mary/merry/marry?",
+  "options": [
+   {
+    "id": "a",
+    "label": "all 3 are the same"
+   },
+   {
+    "id": "b",
+    "label": "all 3 are different"
+   },
+   {
+    "id": "c",
+    "label": "Mary and merry are the same; marry is different"
+   },
+   {
+    "id": "d",
+    "label": "merry and marry are the same; Mary is different"
+   },
+   {
+    "id": "e",
+    "label": "Mary and marry are the same; merry is different"
+   }
+  ]
+ },
+ {
+  "id": "q_79",
+  "text": "What is your *general* term for a big road that you drive relatively fast on?",
+  "options": [
+   {
+    "id": "a",
+    "label": "highway"
+   },
+   {
+    "id": "b",
+    "label": "freeway"
+   },
+   {
+    "id": "c",
+    "label": "parkway"
+   },
+   {
+    "id": "d",
+    "label": "turnpike"
+   },
+   {
+    "id": "e",
+    "label": "expressway"
+   },
+   {
+    "id": "f",
+    "label": "throughway/thru-way"
+   },
+   {
+    "id": "g",
+    "label": "a freeway is bigger than a highway"
+   },
+   {
+    "id": "h",
+    "label": "a freeway is free (i.e., doesn't charge tolls); a highway isn't"
+   },
+   {
+    "id": "i",
+    "label": "a freeway has limited access (no stop lights, no intersections), whereas a highway can have stop lights and intersections"
+   },
+   {
+    "id": "j",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_21",
+  "text": "pecan",
+  "options": [
+   {
+    "id": "a",
+    "label": "[pi:kæn] with stress on the first syllable (\"PEE-can\")"
+   },
+   {
+    "id": "b",
+    "label": "[pi:kæn] with stress on the second syllable (\"pee-CAN\")"
+   },
+   {
+    "id": "c",
+    "label": "[pi:kɑn] with stress on the first syllable (\"PEE-Kahn\")"
+   },
+   {
+    "id": "d",
+    "label": "[pi:kɑn] with stress on the second syllable (\"pee-KAHN\")"
+   },
+   {
+    "id": "e",
+    "label": "[pɪkæn] (\"pick Ann\")"
+   },
+   {
+    "id": "f",
+    "label": "[pɪkɑn] (\"pick Ahn\")"
+   },
+   {
+    "id": "g",
+    "label": "I pronounce it differently when it's alone than when it's in a compound like \"pecan pie\""
+   },
+   {
+    "id": "h",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_94",
+  "text": "Do you say \"frosting\" or \"icing\" for the sweet spread one puts on a cake?",
+  "options": [
+   {
+    "id": "a",
+    "label": "frosting"
+   },
+   {
+    "id": "b",
+    "label": "icing"
+   },
+   {
+    "id": "c",
+    "label": "icing is thinner than frosting, white, and/or made of powdered sugar and milk or lemon juice"
+   },
+   {
+    "id": "d",
+    "label": "both"
+   },
+   {
+    "id": "e",
+    "label": "neither"
+   },
+   {
+    "id": "f",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_84",
+  "text": "What do you call a traffic situation in which several roads meet in a circle and you have to get off at a certain point?",
+  "options": [
+   {
+    "id": "a",
+    "label": "rotary"
+   },
+   {
+    "id": "b",
+    "label": "roundabout"
+   },
+   {
+    "id": "c",
+    "label": "circle"
+   },
+   {
+    "id": "d",
+    "label": "traffic circle"
+   },
+   {
+    "id": "e",
+    "label": "traffic circus"
+   },
+   {
+    "id": "f",
+    "label": "I have no word for this"
+   },
+   {
+    "id": "g",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_60",
+  "text": "What do you call the area of grass between the sidewalk and the road?",
+  "options": [
+   {
+    "id": "a",
+    "label": "berm"
+   },
+   {
+    "id": "b",
+    "label": "parking"
+   },
+   {
+    "id": "c",
+    "label": "tree lawn"
+   },
+   {
+    "id": "d",
+    "label": "terrace"
+   },
+   {
+    "id": "e",
+    "label": "curb strip"
+   },
+   {
+    "id": "f",
+    "label": "beltway"
+   },
+   {
+    "id": "g",
+    "label": "verge"
+   },
+   {
+    "id": "h",
+    "label": "I have no word for this"
+   },
+   {
+    "id": "i",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_58",
+  "text": "Which of these terms do you prefer for a sale of unwanted items on your porch, in your yard, etc.?",
+  "options": [
+   {
+    "id": "a",
+    "label": "tag sale"
+   },
+   {
+    "id": "b",
+    "label": "yard sale"
+   },
+   {
+    "id": "c",
+    "label": "garage sale"
+   },
+   {
+    "id": "d",
+    "label": "rummage sale"
+   },
+   {
+    "id": "e",
+    "label": "thrift sale"
+   },
+   {
+    "id": "f",
+    "label": "stoop sale"
+   },
+   {
+    "id": "g",
+    "label": "carport sale"
+   },
+   {
+    "id": "h",
+    "label": "sidewalk sale"
+   },
+   {
+    "id": "i",
+    "label": "jumble (sale)"
+   },
+   {
+    "id": "j",
+    "label": "car boot sale"
+   },
+   {
+    "id": "k",
+    "label": "car boot"
+   },
+   {
+    "id": "l",
+    "label": "patio sale"
+   },
+   {
+    "id": "m",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_110",
+  "text": "What do you call the night before Halloween?",
+  "options": [
+   {
+    "id": "a",
+    "label": "gate night"
+   },
+   {
+    "id": "b",
+    "label": "trick night"
+   },
+   {
+    "id": "c",
+    "label": "mischief night"
+   },
+   {
+    "id": "d",
+    "label": "cabbage night"
+   },
+   {
+    "id": "e",
+    "label": "goosy night"
+   },
+   {
+    "id": "f",
+    "label": "devil's night"
+   },
+   {
+    "id": "g",
+    "label": "devil's eve"
+   },
+   {
+    "id": "h",
+    "label": "I have no word for this"
+   },
+   {
+    "id": "i",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_41",
+  "text": "Do you use \"spigot\" or \"spicket\" to refer to a faucet or tap that water comes out of?",
+  "options": [
+   {
+    "id": "a",
+    "label": "spicket"
+   },
+   {
+    "id": "b",
+    "label": "spigot"
+   },
+   {
+    "id": "c",
+    "label": "I use both interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "I say \"spicket\" but spell it \"spigot\""
+   },
+   {
+    "id": "e",
+    "label": "I use both with different meanings"
+   },
+   {
+    "id": "f",
+    "label": "I don't use either version of this word"
+   },
+   {
+    "id": "g",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_80",
+  "text": "What do you call it when rain falls while the sun is shining?",
+  "options": [
+   {
+    "id": "a",
+    "label": "sunshower"
+   },
+   {
+    "id": "b",
+    "label": "the wolf is giving birth"
+   },
+   {
+    "id": "c",
+    "label": "the devil is beating his wife"
+   },
+   {
+    "id": "d",
+    "label": "monkey's wedding"
+   },
+   {
+    "id": "e",
+    "label": "fox's wedding"
+   },
+   {
+    "id": "f",
+    "label": "pineapple rain"
+   },
+   {
+    "id": "g",
+    "label": "liquid sun"
+   },
+   {
+    "id": "h",
+    "label": "I have no term or expression for this"
+   },
+   {
+    "id": "i",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_75",
+  "text": "What do you call the wheeled contraption in which you carry groceries at the supermarket?",
+  "options": [
+   {
+    "id": "a",
+    "label": "shopping cart"
+   },
+   {
+    "id": "b",
+    "label": "shopping wagon"
+   },
+   {
+    "id": "c",
+    "label": "grocery cart"
+   },
+   {
+    "id": "d",
+    "label": "shopping carriage"
+   },
+   {
+    "id": "e",
+    "label": "carriage"
+   },
+   {
+    "id": "f",
+    "label": "buggy"
+   },
+   {
+    "id": "g",
+    "label": "supermarket trolley"
+   },
+   {
+    "id": "h",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_76",
+  "text": "What term do you use to refer to something that is across both streets from you at an intersection (or diagonally across from you in general)?",
+  "options": [
+   {
+    "id": "a",
+    "label": "kitty-corner"
+   },
+   {
+    "id": "b",
+    "label": "kitacorner"
+   },
+   {
+    "id": "c",
+    "label": "catercorner"
+   },
+   {
+    "id": "d",
+    "label": "catty-corner"
+   },
+   {
+    "id": "e",
+    "label": "kitty cross"
+   },
+   {
+    "id": "f",
+    "label": "kitty wampus"
+   },
+   {
+    "id": "g",
+    "label": "I can only use \"diagonal\" for this"
+   },
+   {
+    "id": "h",
+    "label": "I have no term for this"
+   },
+   {
+    "id": "i",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_109",
+  "text": "What do you call the paper container in which you might bring home items you bought at the store?",
+  "options": [
+   {
+    "id": "a",
+    "label": "bag"
+   },
+   {
+    "id": "b",
+    "label": "sack"
+   },
+   {
+    "id": "c",
+    "label": "poke"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_49",
+  "text": "I ____ her lifeless body from the pool",
+  "options": [
+   {
+    "id": "a",
+    "label": "dragged"
+   },
+   {
+    "id": "b",
+    "label": "drug"
+   },
+   {
+    "id": "c",
+    "label": "I use both interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_63",
+  "text": "What do you call the drink made with milk and ice cream?",
+  "options": [
+   {
+    "id": "a",
+    "label": "milkshake/shake"
+   },
+   {
+    "id": "b",
+    "label": "frappe"
+   },
+   {
+    "id": "c",
+    "label": "cabinet"
+   },
+   {
+    "id": "d",
+    "label": "velvet"
+   },
+   {
+    "id": "e",
+    "label": "thick shake"
+   },
+   {
+    "id": "f",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_1",
+  "text": "aunt",
+  "options": [
+   {
+    "id": "a",
+    "label": "[ɑ] as in \"ah\""
+   },
+   {
+    "id": "b",
+    "label": "[æ] as in \"ant\""
+   },
+   {
+    "id": "c",
+    "label": "[ɒ] as in \"caught\""
+   },
+   {
+    "id": "d",
+    "label": "I have the same vowel in \"ah\", \"caught\", and \"aunt\""
+   },
+   {
+    "id": "e",
+    "label": "I pronounce it the same as \"ain't\""
+   },
+   {
+    "id": "f",
+    "label": "I use [ɑ/ɒ] when referring to the general concept of an aunt, but [æ] when referring to a specific person by name."
+   },
+   {
+    "id": "g",
+    "label": "I use [æ] when referring to the general concept of an aunt, but [ɑ/ɒ] when referring to a specific person by name."
+   },
+   {
+    "id": "h",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_2",
+  "text": "been",
+  "options": [
+   {
+    "id": "a",
+    "label": "[ɪ] as in \"sit\""
+   },
+   {
+    "id": "b",
+    "label": "[i:] as in \"see\""
+   },
+   {
+    "id": "c",
+    "label": "[ɛ] as in \"set\""
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_3",
+  "text": "the first vowel in \"Bowie knife\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[o:] as in \"Bo\""
+   },
+   {
+    "id": "b",
+    "label": "[u:] as in \"boo\""
+   },
+   {
+    "id": "c",
+    "label": "I have seen this word in print, but have no idea how to pronounce it"
+   },
+   {
+    "id": "d",
+    "label": "I have never seen or heard this word"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_4",
+  "text": "caramel",
+  "options": [
+   {
+    "id": "a",
+    "label": "with 2 syllables (\"car-ml\")"
+   },
+   {
+    "id": "b",
+    "label": "with 3 syllables (\"carra-mel\")"
+   },
+   {
+    "id": "c",
+    "label": "I use both interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "I have both forms, but the two have different meanings"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_5",
+  "text": "the vowel in the second syllable of \"cauliflower\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[i:] as in \"see\""
+   },
+   {
+    "id": "b",
+    "label": "[ɪ] as in \"sit\""
+   },
+   {
+    "id": "c",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_6",
+  "text": "the last vowel in \"centaur\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[ɑ] as in \"car\" (\"sen-tar\")"
+   },
+   {
+    "id": "b",
+    "label": "[ɒ] as in \"caught\""
+   },
+   {
+    "id": "c",
+    "label": "I use the same vowel in \"car\", \"caught\", and \"centaur\""
+   },
+   {
+    "id": "d",
+    "label": "rhymes with \"sore\" and \"more\" (\"sen-tore\")"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_7",
+  "text": "coupon",
+  "options": [
+   {
+    "id": "a",
+    "label": "with [u:] as in \"coop\" (\"coopon\")"
+   },
+   {
+    "id": "b",
+    "label": "with [ju:] as in \"cute\" (\"cyoopon\")"
+   },
+   {
+    "id": "c",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_8",
+  "text": "Craig (the name)",
+  "options": [
+   {
+    "id": "a",
+    "label": "[ɛ] as in \"set\""
+   },
+   {
+    "id": "b",
+    "label": "[e:] as in \"say\""
+   },
+   {
+    "id": "c",
+    "label": "I say something in between the vowels in \"set\" and \"say\", but closer to the one in \"say\""
+   },
+   {
+    "id": "d",
+    "label": "I say something in between the vowels in \"set\" and \"say\", but closer to the one in \"set\""
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_9",
+  "text": "crayon",
+  "options": [
+   {
+    "id": "a",
+    "label": "[æ] as in \"man\" (1 syllable, \"cran\")"
+   },
+   {
+    "id": "b",
+    "label": "[ejɑ] (2 syllables, \"cray-ahn\")"
+   },
+   {
+    "id": "c",
+    "label": "[ejɒ] (2 syllables, \"cray-awn\", where the second syllable rhymes with \"dawn\")"
+   },
+   {
+    "id": "d",
+    "label": "[aw] (I pronounce this the same as \"crown\")"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_10",
+  "text": "creek (a small body of running water)",
+  "options": [
+   {
+    "id": "a",
+    "label": "[i:] as in \"see\""
+   },
+   {
+    "id": "b",
+    "label": "[ɪ] as in \"sit\""
+   },
+   {
+    "id": "c",
+    "label": "I use both interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "I don't know how to pronounce this word"
+   },
+   {
+    "id": "e",
+    "label": "I use both, but they mean two different things"
+   },
+   {
+    "id": "f",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_11",
+  "text": "the first vowel in \"Florida\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[o:] as in \"flow\" (\"flow-ri-da\")"
+   },
+   {
+    "id": "b",
+    "label": "[ɑ] as in \"ah\" (\"flah-ri-da\")"
+   },
+   {
+    "id": "c",
+    "label": "[ɒ] as in \"saw\" (\"flaw-ri-da\")"
+   },
+   {
+    "id": "d",
+    "label": "[ɔ] as in \"sore\" (\"flore-i-da\")"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_12",
+  "text": "flourish",
+  "options": [
+   {
+    "id": "a",
+    "label": "[ə] as in \"bird\" (\"flurr-ish\")"
+   },
+   {
+    "id": "b",
+    "label": "[ɔ] as in \"sore\" (\"flore-ish\")"
+   },
+   {
+    "id": "c",
+    "label": "[ʌ] as in \"sun\" (\"fluh-rish\")"
+   },
+   {
+    "id": "d",
+    "label": "other (including if you use one pronunciation for the verb and a different pronunciation for the noun)"
+   }
+  ]
+ },
+ {
+  "id": "q_13",
+  "text": "the last vowel in \"handkerchief\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[i:] as in \"see\""
+   },
+   {
+    "id": "b",
+    "label": "[ɪ] as in \"sit\""
+   },
+   {
+    "id": "c",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_14",
+  "text": "lawyer",
+  "options": [
+   {
+    "id": "a",
+    "label": "with [ɔj] as in \"boy\" (\"loyer\")"
+   },
+   {
+    "id": "b",
+    "label": "with [ɒ] as in \"saw\" (\"law-yer\")"
+   },
+   {
+    "id": "c",
+    "label": "I use both interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_16",
+  "text": "mayonnaise",
+  "options": [
+   {
+    "id": "a",
+    "label": "with [æ] as in \"man\" (2 syllables--\"man-aze\")"
+   },
+   {
+    "id": "b",
+    "label": "with [ejə] (3 syllables--\"may-uh-naze\")"
+   },
+   {
+    "id": "c",
+    "label": "I use both interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_17",
+  "text": "the first vowel in \"miracle\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[i:] as in \"near\""
+   },
+   {
+    "id": "b",
+    "label": "[ɪ] as in \"knit\""
+   },
+   {
+    "id": "c",
+    "label": "[ɛ] as in \"net\""
+   },
+   {
+    "id": "d",
+    "label": "I say something in between [ɪ] and [ɛ]"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_18",
+  "text": "mischievous vs. mischievious",
+  "options": [
+   {
+    "id": "a",
+    "label": "mischievous (3 syllables)"
+   },
+   {
+    "id": "b",
+    "label": "mischievious (4 syllables)"
+   },
+   {
+    "id": "c",
+    "label": "I write \"mischievous\" but say \"mischievious\""
+   },
+   {
+    "id": "d",
+    "label": "I use both"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_19",
+  "text": "the final vowel in \"Monday,\" \"Friday,\" etc.",
+  "options": [
+   {
+    "id": "a",
+    "label": "[e:] as in \"say\""
+   },
+   {
+    "id": "b",
+    "label": "[i:] as in \"see\""
+   },
+   {
+    "id": "c",
+    "label": "I use [e:] with the words in isolation, but [i:] in compounds (such as \"Sunday school\")"
+   },
+   {
+    "id": "d",
+    "label": "other (e.g. do you use one vowel in some day names, and another in the other names?)"
+   }
+  ]
+ },
+ {
+  "id": "q_20",
+  "text": "the second vowel in \"pajamas\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[æ] as in \"jam\""
+   },
+   {
+    "id": "b",
+    "label": "[ɑ] as in \"father\""
+   },
+   {
+    "id": "c",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_22",
+  "text": "poem",
+  "options": [
+   {
+    "id": "a",
+    "label": "one syllable"
+   },
+   {
+    "id": "b",
+    "label": "two syllables"
+   }
+  ]
+ },
+ {
+  "id": "q_23",
+  "text": "really",
+  "options": [
+   {
+    "id": "a",
+    "label": "[i:] as in \"see\" (\"reely\")"
+   },
+   {
+    "id": "b",
+    "label": "[ɪ] as in \"sit\" (\"rilly\")"
+   },
+   {
+    "id": "c",
+    "label": "[iə] (\"ree-l-y\")"
+   },
+   {
+    "id": "d",
+    "label": "other (including if you use two or more of these interchangeably)"
+   }
+  ]
+ },
+ {
+  "id": "q_24",
+  "text": "realtor (a real estate agent)",
+  "options": [
+   {
+    "id": "a",
+    "label": "2 syllables (\"reel-ter\")"
+   },
+   {
+    "id": "b",
+    "label": "3 syllables (real[ə]tor, in other words \"reel-uh-ter\")"
+   },
+   {
+    "id": "c",
+    "label": "3 syllables (ree-l-ter)"
+   },
+   {
+    "id": "d",
+    "label": "I don't use this word; I use \"estate agent\""
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_25",
+  "text": "roof, room, broom, root",
+  "options": [
+   {
+    "id": "a",
+    "label": "[u:] as in \"food\""
+   },
+   {
+    "id": "b",
+    "label": "[ʊ] as in \"foot\""
+   },
+   {
+    "id": "c",
+    "label": "these four words do not all have the same vowel"
+   }
+  ]
+ },
+ {
+  "id": "q_26",
+  "text": "route (as in, \"the route from one place to another\")",
+  "options": [
+   {
+    "id": "a",
+    "label": "rhymes with \"hoot\""
+   },
+   {
+    "id": "b",
+    "label": "rhymes with \"out\""
+   },
+   {
+    "id": "c",
+    "label": "I can pronounce it either way interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "I say it like \"hoot\" for the noun and like \"out\" for the verb."
+   },
+   {
+    "id": "e",
+    "label": "I say it like \"out\" for the noun and like \"hoot\" for the verb."
+   },
+   {
+    "id": "f",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_27",
+  "text": "the first vowel in \"syrup\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[i] \"sear-up\""
+   },
+   {
+    "id": "b",
+    "label": "[ɪ] \"sih-rup\""
+   },
+   {
+    "id": "c",
+    "label": "[ə] as in \"sir\""
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_29",
+  "text": "almond",
+  "options": [
+   {
+    "id": "a",
+    "label": "all-mond (first syllable sounds like \"all\")"
+   },
+   {
+    "id": "b",
+    "label": "ah-mond (no l)"
+   },
+   {
+    "id": "c",
+    "label": "aw-mond (if different from \"ah-mond\")"
+   },
+   {
+    "id": "d",
+    "label": "I say something in between l and nothing"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_30",
+  "text": "the \"s\" in \"anniversary\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[s] as in \"sock\""
+   },
+   {
+    "id": "b",
+    "label": "[ʃ] as in \"shock\""
+   }
+  ]
+ },
+ {
+  "id": "q_31",
+  "text": "asterisk",
+  "options": [
+   {
+    "id": "a",
+    "label": "asteri[ks]"
+   },
+   {
+    "id": "b",
+    "label": "asteri[sk]"
+   },
+   {
+    "id": "c",
+    "label": "asteri[k] (with no s in the final cluster)"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_32",
+  "text": "candidate",
+  "options": [
+   {
+    "id": "a",
+    "label": "I pronounce the first d"
+   },
+   {
+    "id": "b",
+    "label": "I don't pronounce the first d"
+   },
+   {
+    "id": "c",
+    "label": "I vary freely between pronouncing the first d and not doing so"
+   },
+   {
+    "id": "d",
+    "label": "I only pronounce the first d when I'm speaking slowly/carefully"
+   },
+   {
+    "id": "e",
+    "label": "Depends whether it refers to a political or generic candidate, as in \"that assignment looks like a good candidate for elimination\""
+   },
+   {
+    "id": "f",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_33",
+  "text": "the \"s\" in \"chromosome\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[s]"
+   },
+   {
+    "id": "b",
+    "label": "[z]"
+   },
+   {
+    "id": "c",
+    "label": "both are acceptable to me"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_34",
+  "text": "et cetera",
+  "options": [
+   {
+    "id": "a",
+    "label": "pronounced e[ts]etera (4 syllables)"
+   },
+   {
+    "id": "b",
+    "label": "pronounced e[ts]etra (3 syllables)"
+   },
+   {
+    "id": "c",
+    "label": "pronounced eksetera (4 syllables)"
+   },
+   {
+    "id": "d",
+    "label": "pronounced eksetra (3 syllables)"
+   },
+   {
+    "id": "e",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_35",
+  "text": "the final consonant in \"garage\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[ʒ] as in the middle consonant of \"measure\""
+   },
+   {
+    "id": "b",
+    "label": "[dʒ] as in \"edge\""
+   },
+   {
+    "id": "c",
+    "label": "I use both interchangeably"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_36",
+  "text": "the \"c\" in \"grocery\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[s] as in \"sock\""
+   },
+   {
+    "id": "b",
+    "label": "[ʃ] as in \"shock\""
+   },
+   {
+    "id": "c",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_37",
+  "text": "huge, humor, humongous, human...",
+  "options": [
+   {
+    "id": "a",
+    "label": "I pronounce the h"
+   },
+   {
+    "id": "b",
+    "label": "I don't pronounce the h"
+   },
+   {
+    "id": "c",
+    "label": "I can pronounce the h or not"
+   },
+   {
+    "id": "d",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_38",
+  "text": "the \"s\" in \"nursery\"",
+  "options": [
+   {
+    "id": "a",
+    "label": "[s] as in \"sock\""
+   },
+   {
+    "id": "b",
+    "label": "[ʃ] as in \"shock\""
+   },
+   {
+    "id": "c",
+    "label": "other"
+   }
+  ]
+ },
+ {
+  "id": "q_39",
+  "text": "the \"s\" in the last name of Elvis Presley",
+  "options": [
+   {
+    "id": "a",
+    "label": "[s]"
+   },
+   {
+    "id": "b",
+    "label": "[z]"
+   }
+  ]
+ }
+]

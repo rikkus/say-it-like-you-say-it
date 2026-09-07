@@ -1,0 +1,33 @@
+name: SayIt
+options:
+  bundleIdPrefix: cc.hemsley
+  deploymentTarget:
+    iOS: "26.0"
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+    SWIFT_STRICT_CONCURRENCY: complete
+targets:
+  SayIt:
+    type: application
+    platform: iOS
+    sources:
+      - path: SayIt/Sources
+      - path: SayIt/Resources
+        buildPhase: resources
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: cc.hemsley.sayit
+        INFOPLIST_KEY_CFBundleDisplayName: Say It
+        INFOPLIST_KEY_NSMicrophoneUsageDescription: "Say It listens to how you pronounce words so it can work out your dialect."
+        INFOPLIST_KEY_NSSpeechRecognitionUsageDescription: "Say It transcribes what you say so it can tell which words you use."
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad: "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight"
+        INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: "UIInterfaceOrientationPortrait"
+        TARGETED_DEVICE_FAMILY: "1,2"
